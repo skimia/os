@@ -31,3 +31,6 @@ before_install:
 script:
   - chmod +x ./build.sh
   - ./build.sh --quiet verify
+
+notifications:
+  slack: skimiaos:S2gyfuP55NNMQbzhXzhtwgBN
