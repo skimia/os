@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D3172DDC-C736-4A06-A817-00358D8B4FAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{66042651-2357-4689-BE09-88D85068CA17}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SkimiaOS.ApiHost", "src\SkimiaOS.ApiHost\SkimiaOS.ApiHost.xproj", "{A68B38E2-8805-4204-AB63-11B67DCA6067}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A68B38E2-8805-4204-AB63-11B67DCA6067}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A68B38E2-8805-4204-AB63-11B67DCA6067}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A68B38E2-8805-4204-AB63-11B67DCA6067}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A68B38E2-8805-4204-AB63-11B67DCA6067}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A68B38E2-8805-4204-AB63-11B67DCA6067} = {D3172DDC-C736-4A06-A817-00358D8B4FAE}
+	EndGlobalSection
+EndGlobal
