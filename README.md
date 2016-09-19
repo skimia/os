@@ -5,7 +5,7 @@ Skimia servier operating system for create distribued web apps
 
 [![license](https://img.shields.io/github/license/skimia/os.svg?maxAge=2592000?style=flat-square)](https://github.com/skimia/os/blob/master/LICENSE)
 [![Maintenance](https://img.shields.io/maintenance/yes/2016.svg?maxAge=2592000?style=flat-square)]()
-[![Waffle.io](https://img.shields.io/waffle/label/skimia/os/current.svg?maxAge=2592000?style=flat-square)](https://waffle.io/skimia/os)https://img.shields.io/badge/Slack-Team-green.svg
+[![Waffle.io](https://img.shields.io/waffle/label/skimia/os/current.svg?maxAge=2592000?style=flat-square)](https://waffle.io/skimia/os)
 ## Build Status
 
 | Build server| Platform       | Status (master) | Status (dev)                                                                                                                                                               |
