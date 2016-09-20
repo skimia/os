@@ -1,11 +1,31 @@
 # os
 Skimia servier operating system for create distribued web apps
 
-[![Waffle.io](https://img.shields.io/badge/Slack-Team-green.svg?maxAge=2592000?style=flat-square)](https://skimiaos.slack.com)
+[![Slack](https://img.shields.io/badge/Slack-Team-green.svg?maxAge=2592000?style=flat-square)](https://skimiaos.slack.com)
 
 [![license](https://img.shields.io/github/license/skimia/os.svg?maxAge=2592000?style=flat-square)](https://github.com/skimia/os/blob/master/LICENSE)
 [![Maintenance](https://img.shields.io/maintenance/yes/2016.svg?maxAge=2592000?style=flat-square)]()
 [![Waffle.io](https://img.shields.io/waffle/label/skimia/os/current.svg?maxAge=2592000?style=flat-square)](https://waffle.io/skimia/os)
+
+## Getting started
+
+### Using Docker
+
+#### compile
+```
+git clone git@github.com:skimia/os.git
+cd os
+docker build -t skimia/os .
+docker run -ti -p 80:5000 skimia/os
+```
+#### Docker Hub
+
+[![Dockerfile](https://img.shields.io/badge/Hub-Dockerfile-blue.svg?style=flat-square)](https://hub.docker.com/r/skimia/os/)
+
+```
+docker run -ti -p 80:5000 skimia/os
+```
+
 ## Build Status
 
 | Build server| Platform       | Status (master) | Status (dev)                                                                                                                                                               |
