@@ -1,7 +1,12 @@
 FROM ubuntu:14.04
 
 MAINTAINER Skimia Agency <contact@skimia.agency>
+
+#0 fix 
+
 ENV DEBIAN_FRONTEND noninteractive
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+ENV KOREBUILD_SKIP_RUNTIME_INSTALL true
 
 #1 Update and install basic packages needed
 
@@ -22,8 +27,12 @@ RUN sudo apt-get install -y dotnet-dev-1.0.0-preview2-003131
 
 RUN sudo apt-get install -y mono-devel
 
-#5 Get Orchard from Github repository
-RUN cd /home ; git clone https://github.com/skimia/os.git
+#5 Get OS from local dir
+COPY . /home/os
 RUN cd /home/os ; ./build.sh
-RUN cd /home/os/src/SkimiaOS.ApiHost ; dotnet run
+
 EXPOSE 5000
+
+#6 Run OS
+
+CMD cd /home/os/src/SkimiaOS.ApiHost ; dotnet run
