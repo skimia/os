@@ -5,8 +5,10 @@ MAINTAINER Skimia Agency <contact@skimia.agency>
 #0 fix
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+ENV ASPNETCORE_SERVER.URLS=http://0.0.0.0:5000/
 ENV KOREBUILD_SKIP_RUNTIME_INSTALL true
+
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 
 #1 Update and install basic packages needed
 
@@ -28,8 +30,9 @@ RUN sudo apt-get install -y dotnet-dev-1.0.0-preview2-003131
 RUN sudo apt-get install -y mono-devel
 
 #5 Get OS from local dir
+
 COPY . /home/os
-RUN cd /home/os ; chmod +x ./build.sh ; ./build.sh
+RUN cd /home/os ; chmod +x ./build.sh && sleep 1 && ./build.sh
 
 EXPOSE 5000
 
