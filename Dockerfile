@@ -2,7 +2,7 @@ FROM ubuntu:14.04
 
 MAINTAINER Skimia Agency <contact@skimia.agency>
 
-#0 fix 
+#0 fix
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
@@ -29,7 +29,7 @@ RUN sudo apt-get install -y mono-devel
 
 #5 Get OS from local dir
 COPY . /home/os
-RUN cd /home/os ; ./build.sh
+RUN cd /home/os ; chmod +x ./build.sh ; ./build.sh
 
 EXPOSE 5000
 
