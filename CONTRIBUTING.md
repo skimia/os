@@ -1,4 +1,4 @@
-Engineering guidelines
+Contributing guidelines
 ======================
 
 * [Basics](#basics)
@@ -22,16 +22,13 @@ The advantages are numerous: improving code quality, more visibility on changes 
 :grey_exclamation: The *structure* of the code that we write and the *tools* that we use to write the code.
 
 
-### Repos
-
-To create a new repo in the https://github.com/orchard/ org, contact @jetski5822.
-
-
 ### Branch strategy
 
 In general:
 
-* `master` has the code that is being worked on.
+* `master` has the code that is stable.
+
+* `dev` has the code that is being worked on.
 
 This will change as the project evolves.
 
@@ -40,7 +37,7 @@ This will change as the project evolves.
 
 Solution files go in the repo root.
 
-Solution names match repo names (e.g. Mvc.sln in the Mvc repo).
+Solution names match repo names (e.g. SkimiaOS.sln in the Skimia/OS repo).
 
 Every project also needs a `project.json` and a matching `.xproj` file. This `project.json` is the source of truth for a project's dependencies and configuration options.
 
@@ -53,18 +50,18 @@ For example, in the `Fruit` repo with the `Banana` and `Lychee` projects you wou
 /src
 /src/Microsoft.AspNet.Banana
 /src/Microsoft.AspNet.Banana/project.json
-/src/Microsoft.AspNet.Banana/Banana.kproj
+/src/Microsoft.AspNet.Banana/Banana.xproj
 /src/Microsoft.AspNet.Banana/Banana.cs
 /src/Microsoft.AspNet.Banana/Util/BananaUtil.cs
 /src/Microsoft.AspNet.Lychee
 /src/Microsoft.AspNet.Lychee/project.json
-/src/Microsoft.AspNet.Lychee/Lychee.kproj
+/src/Microsoft.AspNet.Lychee/Lychee.xproj
 /src/Microsoft.AspNet.Lychee/Lychee.cs
 /src/Microsoft.AspNet.Lychee/Util/LycheeUtil.cs
 /test
 /test/Microsoft.AspNet.Banana.Tests
 /test/Microsoft.AspNet.Banana.Tests/project.json
-/test/Microsoft.AspNet.Banana.Tests/BananaTest.kproj
+/test/Microsoft.AspNet.Banana.Tests/BananaTest.xproj
 /test/Microsoft.AspNet.Banana.Tests/BananaTest.cs
 /test/Microsoft.AspNet.Banana.Tests/Util/BananaUtilTest.cs
 ```
@@ -78,26 +75,9 @@ Note that after running the `build` command the system will generate the followi
 All these files are set to be ignored in the `.gitignore` file.
 
 
-### Conditional compilation for Desktop/CoreCLR
-
-Almost all development is done for both CoreCLR and Desktop .NET. Some code will be CoreCLR-specific or Desktop-specific because of API changes or behavior differences. The build system has two conditional compilation statements to assist with this:
-
-Desktop:
-
-```c#
-#ifdef DNX451
-```
-
-CoreCLR:
-
-```c#
-#ifdef DNXCORE50
-```
-
-
 ### Assembly naming pattern
 
-The general naming pattern is `Orchard.<area>.<subarea>`.
+The general naming pattern is `Skimia.<area>.<subarea>`.
 
 
 ### Build system
@@ -190,7 +170,7 @@ Our frameworks should work on CoreCLR, which supports multiple operating systems
 #### Line breaks
 Windows uses `\r\n`, OS X and Linux uses `\n`. When it is important, use `Environment.NewLine` instead of hard-coding the line break.
 
-Note: this may not always be possible or necessary. 
+Note: this may not always be possible or necessary.
 
 Be aware that these line-endings may cause problems in code when using `@""` text blocks with line breaks.
 
@@ -201,7 +181,7 @@ OS's use different variable names to represent similar settings. Code should con
 For example, when looking for the user's home directory, on Windows the variable is `USERPROFILE` but on most Linux systems it is `HOME`.
 
 ```c#
-var homeDir = Environment.GetEnvironmentVariable("USERPROFILE") 
+var homeDir = Environment.GetEnvironmentVariable("USERPROFILE")
                   ?? Environment.GetEnvironmentVariable("HOME");
 ```
 
@@ -326,7 +306,7 @@ The contents of every unit test should be split into three distinct stages, opti
 ```c#
 // Arrange  
 // Act  
-// Assert 
+// Assert
 ```
 
 The crucial thing here is that the `Act` stage is exactly one statement. That one statement is nothing more than a call to the one method that you are trying to test. Keeping that one statement as simple as possible is also very important. For example, this is not ideal:
