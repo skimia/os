@@ -1,4 +1,5 @@
 {
+  "version": "0.1.0-*",
   "dependencies": {
     "Microsoft.NETCore.App": {
       "version": "1.0.1",
@@ -46,7 +47,7 @@
     "include": [
       "wwwroot",
       "**/*.cshtml",
-      "appsettings.json",
+      "config.json",
       "web.config"
     ]
   },
