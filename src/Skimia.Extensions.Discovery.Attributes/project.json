@@ -1,0 +1,16 @@
+﻿{
+  "version": "0.0.1-*",
+
+  "dependencies": {
+    "NETStandard.Library": "1.6.0",
+    "Skimia.Extensions.Discovery.Attributes.Abstractions": "0.0.1-*",
+    "Skimia.Extensions.Reflection": "1.0.0-*",
+    "System.Reflection.TypeExtensions": "4.1.0"
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    }
+  }
+}
