@@ -42,3 +42,7 @@ docker run -ti -p 80:5000 skimia/os
 | In Progress    | [![Waffle.io](https://img.shields.io/waffle/label/skimia/os/in%20progress.svg?maxAge=2592000&style=flat-square)](https://waffle.io/skimia/os)      | Issue currently treated.                                             |
 | Packaging      | [![Waffle.io](https://img.shields.io/waffle/label/skimia/os/packaging.svg?maxAge=2592000&style=flat-square)](https://waffle.io/skimia/os)          | Issue fixed, wait to be merged in DEV.                               |
 | Ready To Merge | [![Waffle.io](https://img.shields.io/waffle/label/skimia/os/ready%20to%20merge.svg?maxAge=2592000&style=flat-square)](https://waffle.io/skimia/os) | Wait to be merged in master and released in new version              |
+
+## Contributing
+
+We currently follow the these [contributing guidelines.](https://github.com/skimia/os/blob/master/CONTRIBUTING.md)
