@@ -1,12 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Diagnostics.CodeAnalysis;
+using ExtCore.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Skimia.Extensions.Discovery.Attributes;
+using Skimia.Extensions.Discovery.Attributes.Abstractions;
 
 namespace SkimiaOS.ApiHost
 {
@@ -32,8 +34,11 @@ namespace SkimiaOS.ApiHost
         {
             // Add framework services.
             services.AddMvc();
+            services.AddDiscovery();
 
             base.ConfigureServices(services);
+
+            LoadExtensionInDiscover();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +47,12 @@ namespace SkimiaOS.ApiHost
             app.UseMvc();
 
             base.Configure(app);
+        }
+
+        private void LoadExtensionInDiscover()
+        {
+            var discover = serviceProvider.GetService<IAttributeDiscover>();
+            discover.RegisterAssemblies(ExtensionManager.Assemblies);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Skimia.Extensions.Discovery.Attributes.Tests
 {
     public class AttributeDiscoverTests
     {
-        protected class InvalidTestAttributeDiscoveredHandler
+        private class InvalidTestAttributeDiscoveredHandler
         {
             [AttributeDiscoveredHandler(typeof(TestHandlerAttribute))]
             public static void RegisterTestHandler()
@@ -16,7 +16,7 @@ namespace Skimia.Extensions.Discovery.Attributes.Tests
             }
         }
 
-        protected class TestAttributeDiscoveredHandler
+        private class TestAttributeDiscoveredHandler
         {
             public static bool RegisterCalled { get; private set; }
 
@@ -27,7 +27,7 @@ namespace Skimia.Extensions.Discovery.Attributes.Tests
             }
         }
 
-        protected class TestAttributeBeforeDiscoveredHandler
+        private class TestAttributeBeforeDiscoveredHandler
         {
             public static bool RegisterCalled { get; private set; }
 
@@ -38,10 +38,30 @@ namespace Skimia.Extensions.Discovery.Attributes.Tests
             }
         }
 
-        protected class TestHandler
+        private class TestHandler
         {
             [TestHandler]
             public static void RegisterTestHandler(object token)
+            {
+
+            }
+        }
+
+        private class TestAttributeDiscoveredInstanceHandler
+        {
+            public bool RegisterCalled { get; private set; }
+
+            [AttributeDiscoveredHandler(typeof(TestHandlerAttribute))]
+            public void RegisterTestHandler(IHandler handler, TestHandlerAttribute handlerAttribute)
+            {
+                RegisterCalled = true;
+            }
+        }
+
+        private class TestInstanceHandler
+        {
+            [TestHandler]
+            public void RegisterTestHandler(object token)
             {
 
             }
@@ -55,7 +75,7 @@ namespace Skimia.Extensions.Discovery.Attributes.Tests
 
             // Act  
             Exception ex = Assert.Throws<ArgumentException>(
-                    () => attributeDiscover.RegisterSharedStaticContainer(typeof(InvalidTestAttributeDiscoveredHandler))
+                    () => attributeDiscover.RegisterStaticContainer(typeof(InvalidTestAttributeDiscoveredHandler))
                 );
             ;
 
@@ -64,26 +84,26 @@ namespace Skimia.Extensions.Discovery.Attributes.Tests
         }
 
         [Fact]
-        public void AttributeDiscoverShouldBeRegisterAttributeDiscoveredHandler()
+        public void AttributeDiscoverShouldRegisterAttributeDiscoveredHandler()
         {
             // Arrange
             var attributeDiscover = new AttributeDiscover();
 
             // Act  
-            attributeDiscover.RegisterSharedStaticContainer(typeof(TestAttributeDiscoveredHandler));
+            attributeDiscover.RegisterStaticContainer(typeof(TestAttributeDiscoveredHandler));
 
             // Assert
             Assert.Equal(1, attributeDiscover.GetAttributeDiscoveredHandlers(typeof(TestHandlerAttribute)).Count());
         }
 
         [Fact]
-        public void AttributeDiscoverShouldBeRegisterHandler()
+        public void AttributeDiscoverShouldRegisterHandler()
         {
             // Arrange
             var attributeDiscover = new AttributeDiscover();
 
             // Act  
-            attributeDiscover.RegisterSharedStaticContainer(typeof(TestHandler));
+            attributeDiscover.RegisterStaticContainer(typeof(TestHandler));
 
             // Assert
             Assert.Equal(1, attributeDiscover.GetHandlers(typeof(TestHandlerAttribute)).Count());
@@ -94,10 +114,10 @@ namespace Skimia.Extensions.Discovery.Attributes.Tests
         {
             // Arrange
             var attributeDiscover = new AttributeDiscover();
-            attributeDiscover.RegisterSharedStaticContainer(typeof(TestAttributeDiscoveredHandler));
+            attributeDiscover.RegisterStaticContainer(typeof(TestAttributeDiscoveredHandler));
 
             // Act  
-            attributeDiscover.RegisterSharedStaticContainer(typeof(TestHandler));
+            attributeDiscover.RegisterStaticContainer(typeof(TestHandler));
 
             // Assert
             Assert.True(TestAttributeDiscoveredHandler.RegisterCalled);
@@ -108,10 +128,10 @@ namespace Skimia.Extensions.Discovery.Attributes.Tests
         {
             // Arrange
             var attributeDiscover = new AttributeDiscover();
-            attributeDiscover.RegisterSharedStaticContainer(typeof(TestHandler));
+            attributeDiscover.RegisterStaticContainer(typeof(TestHandler));
 
             // Act  
-            attributeDiscover.RegisterSharedStaticContainer(typeof(TestAttributeDiscoveredHandler));
+            attributeDiscover.RegisterStaticContainer(typeof(TestAttributeDiscoveredHandler));
 
             // Assert
             Assert.True(TestAttributeDiscoveredHandler.RegisterCalled);
@@ -122,13 +142,57 @@ namespace Skimia.Extensions.Discovery.Attributes.Tests
         {
             // Arrange
             var attributeDiscover = new AttributeDiscover();
-            attributeDiscover.RegisterSharedStaticContainer(typeof(TestHandler));
+            attributeDiscover.RegisterStaticContainer(typeof(TestHandler));
 
             // Act  
-            attributeDiscover.RegisterSharedStaticContainer(typeof(TestAttributeBeforeDiscoveredHandler));
+            attributeDiscover.RegisterStaticContainer(typeof(TestAttributeBeforeDiscoveredHandler));
 
             // Assert
             Assert.False(TestAttributeBeforeDiscoveredHandler.RegisterCalled);
+        }
+
+        [Fact]
+        public void AttributeDiscoverShouldRegisterAttributeDiscoveredInstanceHandler()
+        {
+            // Arrange
+            var attributeDiscover = new AttributeDiscover();
+            var attributeDiscoverInstanceHandler = new TestAttributeDiscoveredInstanceHandler();
+            // Act  
+            attributeDiscover.RegisterInstanceContainer(attributeDiscoverInstanceHandler);
+
+            // Assert
+            Assert.Equal(1, attributeDiscover.GetAttributeDiscoveredHandlers(typeof(TestHandlerAttribute)).Count());
+        }
+
+        [Fact]
+        public void AttributeDiscoverShouldRegisterInstanceHandler()
+        {
+            // Arrange
+            var attributeDiscover = new AttributeDiscover();
+            var instanceHandler = new TestInstanceHandler();
+
+            // Act  
+            attributeDiscover.RegisterInstanceContainer(instanceHandler);
+
+            // Assert
+            Assert.Equal(1, attributeDiscover.GetHandlers(typeof(TestHandlerAttribute)).Count());
+        }
+
+        [Fact]
+        public void AttributeDiscoverShouldBeCalledOnNewStaticInstanceTypeRegistered()
+        {
+            // Arrange
+            var attributeDiscover = new AttributeDiscover();
+            var attributeDiscoverInstanceHandler = new TestAttributeDiscoveredInstanceHandler();
+            var instanceHandler = new TestInstanceHandler();
+
+            attributeDiscover.RegisterInstanceContainer(attributeDiscoverInstanceHandler);
+
+            // Act  
+            attributeDiscover.RegisterInstanceContainer(instanceHandler);
+
+            // Assert
+            Assert.True(attributeDiscoverInstanceHandler.RegisterCalled);
         }
 
     }
