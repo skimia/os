@@ -3,7 +3,7 @@ using System;
 
 namespace Skimia.Extensions.Discovery.Attributes
 {
-    public class AttributeDiscoveredHandler
+    public class AttributeDiscoveredHandler : IAttributeDiscoveredHandler
     {
         public AttributeDiscoveredHandler(Type handlerAttributeType, object container, Type containerType, AttributeDiscoveredHandlerAttribute handlerAttribute, Action<object, IHandler, HandlerAttribute> action)
         {
