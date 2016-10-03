@@ -2,14 +2,14 @@
 
 namespace Skimia.Extensions.Discovery.Attributes
 {
-    public class Handler : IHandler
+    public class ClassHandler : IClassHandler
     {
-        public Handler(HandlerAttribute handlerAttribute)
+        public ClassHandler(ClassHandlerAttribute handlerAttribute)
         {
             HandlerAttribute = handlerAttribute;
         }
 
-        public HandlerAttribute HandlerAttribute
+        public ClassHandlerAttribute HandlerAttribute
         {
             get;
             private set;

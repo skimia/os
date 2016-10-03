@@ -3,15 +3,15 @@ using Skimia.Extensions.Discovery.Attributes.Abstractions;
 
 namespace Skimia.Extensions.Discovery.Attributes.Abstractions
 {
-    public interface IAttributeDiscoveredHandler
+    public interface IMethodAttributeDiscoveredHandler
     {
-        Action<object, IHandler, HandlerAttribute> Action { get; }
+        Action<object, IMethodHandler, MethodHandlerAttribute> Action { get; }
 
         object Container { get; }
 
         Type ContainerType { get; }
 
-        AttributeDiscoveredHandlerAttribute HandlerAttribute { get; }
+        MethodAttributeDiscoveredHandlerAttribute HandlerAttribute { get; }
 
         Type HandlerAttributeType { get; }
     }

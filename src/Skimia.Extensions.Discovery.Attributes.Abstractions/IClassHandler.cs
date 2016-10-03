@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Skimia.Extensions.Discovery.Attributes.Abstractions
 {
-    public interface IHandler
+    public interface IClassHandler
     {
-        HandlerAttribute HandlerAttribute
+        ClassHandlerAttribute HandlerAttribute
         {
             get;
         }

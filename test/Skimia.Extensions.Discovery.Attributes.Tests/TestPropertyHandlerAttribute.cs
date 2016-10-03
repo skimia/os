@@ -2,7 +2,7 @@
 
 namespace Skimia.Extensions.Discovery.Attributes.Tests
 {
-    public class TestHandlerAttribute : HandlerAttribute
+    public class TestPropertyHandlerAttribute : PropertyHandlerAttribute
     {
     }
 }

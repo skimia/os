@@ -6,8 +6,10 @@ namespace Skimia.Extensions.Discovery.Attributes.Abstractions
 {
     public interface IAttributeDiscover
     {
-        IEnumerable<IAttributeDiscoveredHandler> GetAttributeDiscoveredHandlers(Type handlerAttributeType);
-        IEnumerable<IHandler> GetHandlers(Type handlerAttributeType);
+        IEnumerable<IMethodAttributeDiscoveredHandler> GetMethodAttributeDiscoveredHandlers(Type handlerAttributeType);
+
+        IEnumerable<IMethodHandler> GetMethodHandlers(Type handlerAttributeType);
+        IEnumerable<IClassHandler> GetClassHandlers(Type handlerAttributeType);
 
         void RegisterAssemblies(IEnumerable<Assembly> assemblies);
 

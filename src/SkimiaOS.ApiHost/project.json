@@ -17,8 +17,8 @@
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
     "ExtCore.WebApplication": "1.0.0-beta1",
-    "Skimia.Extensions.Discovery.Attributes": "0.1.0-*",
-    "Skimia.Extensions.Discovery.Attributes.Abstractions": "0.1.0-*",
+    "Skimia.Extensions.Discovery.Attributes": "0.2.0-*",
+    "Skimia.Extensions.Discovery.Attributes.Abstractions": "0.2.0-*",
     "Skimia.Extensions.Messages.Abstractions": "0.0.1-*"
   },
 

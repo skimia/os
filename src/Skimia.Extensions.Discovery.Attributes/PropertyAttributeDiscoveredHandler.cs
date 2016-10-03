@@ -3,9 +3,9 @@ using System;
 
 namespace Skimia.Extensions.Discovery.Attributes
 {
-    public class AttributeDiscoveredHandler : IAttributeDiscoveredHandler
+    public class PropertyAttributeDiscoveredHandler : IPropertyAttributeDiscoveredHandler
     {
-        public AttributeDiscoveredHandler(Type handlerAttributeType, object container, Type containerType, AttributeDiscoveredHandlerAttribute handlerAttribute, Action<object, IHandler, HandlerAttribute> action)
+        public PropertyAttributeDiscoveredHandler(Type handlerAttributeType, object container, Type containerType, PropertyAttributeDiscoveredHandlerAttribute handlerAttribute, Action<object, IPropertyHandler, PropertyHandlerAttribute> action)
         {
             HandlerAttributeType = handlerAttributeType;
             Container = container;
@@ -32,13 +32,13 @@ namespace Skimia.Extensions.Discovery.Attributes
             private set;
         }
 
-        public Action<object, IHandler, HandlerAttribute> Action
+        public Action<object, IPropertyHandler, PropertyHandlerAttribute> Action
         {
             get;
             private set;
         }
 
-        public AttributeDiscoveredHandlerAttribute HandlerAttribute
+        public PropertyAttributeDiscoveredHandlerAttribute HandlerAttribute
         {
             get;
             private set;
