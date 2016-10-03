@@ -1,5 +1,4 @@
 ﻿using System;
-using Skimia.Extensions.Discovery.Attributes.Abstractions;
 
 namespace Skimia.Extensions.Discovery.Attributes.Abstractions
 {
