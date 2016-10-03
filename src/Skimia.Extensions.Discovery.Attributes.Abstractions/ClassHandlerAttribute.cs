@@ -2,7 +2,8 @@
 
 namespace Skimia.Extensions.Discovery.Attributes.Abstractions
 {
-    public class HandlerAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Class)]
+    public class ClassHandlerAttribute : Attribute
     {
     }
 }
