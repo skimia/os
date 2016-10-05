@@ -10,7 +10,7 @@ build_script:
   - build.cmd verify
 clone_depth: 1
 artifacts:
-  - path: 'artifacts\**\*.nupkg'
+  - path: 'artifacts\build\*.nupkg'
     name: Nuget Packages
 test: off
 deploy: off
