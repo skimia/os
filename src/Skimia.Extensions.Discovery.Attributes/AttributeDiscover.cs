@@ -349,7 +349,7 @@ namespace Skimia.Extensions.Discovery.Attributes
             if (!_attributeMethodHandlers[assembly].ContainsKey(attribute.GetType()))
                 _attributeMethodHandlers[assembly].Add(attribute.GetType(), new List<IMethodHandler>());
 
-            var handler = new MethodHandler(attribute);
+            var handler = new MethodHandler(attribute, method, containerType, container);
 
             _attributeMethodHandlers[assembly][attribute.GetType()].Add(handler);
 
