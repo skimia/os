@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Skimia.Extensions.Discovery.Attributes;
 using Skimia.Extensions.Discovery.Attributes.Abstractions;
+using Skimia.Extensions.Messages;
 
 namespace SkimiaOS.ApiHost
 {
@@ -33,6 +34,7 @@ namespace SkimiaOS.ApiHost
             // Add framework services.
             services.AddMvc();
             services.AddDiscovery();
+            services.AddMessages();
 
             base.ConfigureServices(services);
 

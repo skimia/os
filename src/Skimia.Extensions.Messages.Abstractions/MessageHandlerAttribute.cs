@@ -1,8 +1,9 @@
 ﻿using System;
+using Skimia.Extensions.Discovery.Attributes.Abstractions;
 
 namespace Skimia.Extensions.Messages.Abstractions
 {
-    public class MessageHandlerAttribute : Attribute
+    public class MessageHandlerAttribute : MethodHandlerAttribute
     {
         public MessageHandlerAttribute(Type messageType)
         {

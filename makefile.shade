@@ -5,3 +5,4 @@ var AUTHORS='Skimia Open Source.'
 
 use-standard-lifecycle
 k-standard-goals
+cover

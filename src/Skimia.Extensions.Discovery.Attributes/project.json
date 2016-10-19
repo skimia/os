@@ -2,8 +2,8 @@
   "dependencies": {
     "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0",
     "NETStandard.Library": "1.6.0",
-    "Skimia.Extensions.Discovery.Attributes.Abstractions": "0.2.1-dev",
-    "Skimia.Extensions.Reflection": "0.1.0-dev",
+    "Skimia.Extensions.Discovery.Attributes.Abstractions": "0.3.0-dev",
+    "Skimia.Extensions.Reflection": "0.1.1-dev",
     "System.Reflection.TypeExtensions": "4.1.0"
   },
   "frameworks": {
@@ -11,5 +11,5 @@
       "imports": "dnxcore50"
     }
   },
-  "version": "0.2.1-dev"
+  "version": "0.3.0-dev"
 }
