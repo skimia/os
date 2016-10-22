@@ -33,9 +33,11 @@ namespace Skimia.Extensions.Discovery.Attributes.Tests
 
         private static class TestAttributeDiscoveredHandler
         {
+            public static IMethodHandler Handler { get; private set; }
             [MethodAttributeDiscoveredHandler(typeof(TestMethodHandlerAttribute))]
             public static void RegisterTestHandler(IMethodHandler handler, TestMethodHandlerAttribute handlerAttribute)
             {
+                Handler = handler;
                 var handlerDelegate = (Action<object, object>) handler.CreateDelegate(typeof(object));
 
                 handlerDelegate(handler.Container, handler);
@@ -55,6 +57,23 @@ namespace Skimia.Extensions.Discovery.Attributes.Tests
 
             // Assert
             Assert.Equal(true, TestStaticHandler.MethodCalled);
+        }
+
+        [Fact]
+        public void MethodHandlerShouldContainCorrectData()
+        {
+            // Arrange
+            var attributeDiscover = new AttributeDiscover();
+
+            attributeDiscover.RegisterStaticContainer(typeof(TestAttributeDiscoveredHandler));
+
+            // Act
+            attributeDiscover.RegisterStaticContainer(typeof(TestStaticHandler));
+
+            // Assert
+            Assert.Equal(typeof(TestStaticHandler), TestAttributeDiscoveredHandler.Handler.ContainerType);
+            Assert.Equal(typeof(TestMethodHandlerAttribute), TestAttributeDiscoveredHandler.Handler.HandlerAttribute.GetType());
+            Assert.Null(TestAttributeDiscoveredHandler.Handler.Container);
         }
 
         [Fact]

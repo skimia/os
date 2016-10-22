@@ -254,4 +254,5 @@ paket-files/
 *.sln.iml
 #cover
 GeneratedReport/
+.history/
 *xunit-results.xml
