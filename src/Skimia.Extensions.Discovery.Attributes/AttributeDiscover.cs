@@ -594,7 +594,7 @@ namespace Skimia.Extensions.Discovery.Attributes
                 || (!parameters[1].ParameterType.GetTypeInfo().IsSubclassOf(typeof(PropertyHandlerAttribute)) && parameters[1].ParameterType != typeof(PropertyHandlerAttribute))
                 )
             {
-                throw new ArgumentException(string.Format("Class handler {0} has incorrect parameters. Right definition is Handler(IPropertyHandler, PropertyHandlerAttribute)", method));
+                throw new ArgumentException(string.Format("Property handler {0} has incorrect parameters. Right definition is Handler(IPropertyHandler, PropertyHandlerAttribute)", method));
             }
 
             if (!method.IsStatic && container == null || method.IsStatic && container != null)
@@ -607,7 +607,7 @@ namespace Skimia.Extensions.Discovery.Attributes
             }
             catch (Exception e)
             {
-                throw new ArgumentException(string.Format("Class handler {0} has incorrect parameters. Right definition is Handler(IPropertyHandler, PropertyHandlerAttribute) : {1}", method, e.Message));
+                throw new ArgumentException(string.Format("Property handler {0} has incorrect parameters. Right definition is Handler(IPropertyHandler, PropertyHandlerAttribute) : {1}", method, e.Message));
             }
 
             foreach (var attribute in attributes)

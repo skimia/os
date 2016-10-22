@@ -10,7 +10,19 @@ namespace Skimia.Extensions.Discovery.Attributes.Tests
         private class InvalidTestMethodAttributeDiscoveredHandler
         {
             [MethodAttributeDiscoveredHandler(typeof(TestMethodHandlerAttribute))]
-            public static void RegisterTestMethodHandler() {}
+            public static void RegisterTestMethodHandler() { }
+        }
+
+        private class InvalidTestClassAttributeDiscoveredHandler
+        {
+            [ClassAttributeDiscoveredHandler(typeof(TestClassHandlerAttribute))]
+            public static void RegisterTestClassHandler() { }
+        }
+
+        private class InvalidTestPropertyAttributeDiscoveredHandler
+        {
+            [PropertyAttributeDiscoveredHandler(typeof(TestPropertyHandlerAttribute))]
+            public static void RegisterTestPropertyHandler() { }
         }
 
         private class TestAttributeDiscoveredHandler
@@ -95,7 +107,39 @@ namespace Skimia.Extensions.Discovery.Attributes.Tests
         }
 
         [Fact]
-        public void AttributeDiscoverShouldRegisterMethodAttributeDiscoveredHandler()
+        public void ClassAttributeDiscoverShouldBeFailIfAnIncorectHandlerIsRegistered()
+        {
+            // Arrange
+            var attributeDiscover = new AttributeDiscover();
+
+            // Act  
+            Exception ex = Assert.Throws<ArgumentException>(
+                    () => attributeDiscover.RegisterStaticContainer(typeof(InvalidTestClassAttributeDiscoveredHandler))
+                );
+            ;
+
+            // Assert
+            Assert.Equal("Class handler Void RegisterTestClassHandler() has incorrect parameters. Right definition is Handler(IClassHandler, ClassHandlerAttribute)", ex.Message);
+        }
+
+        [Fact]
+        public void PropertyAttributeDiscoverShouldBeFailIfAnIncorectHandlerIsRegistered()
+        {
+            // Arrange
+            var attributeDiscover = new AttributeDiscover();
+
+            // Act  
+            Exception ex = Assert.Throws<ArgumentException>(
+                    () => attributeDiscover.RegisterStaticContainer(typeof(InvalidTestPropertyAttributeDiscoveredHandler))
+                );
+            ;
+
+            // Assert
+            Assert.Equal("Property handler Void RegisterTestPropertyHandler() has incorrect parameters. Right definition is Handler(IPropertyHandler, PropertyHandlerAttribute)", ex.Message);
+        }
+
+        [Fact]
+        public void AttributeDiscoverShouldRegisterAttributeDiscoveredHandler()
         {
             // Arrange
             var attributeDiscover = new AttributeDiscover();
@@ -107,6 +151,33 @@ namespace Skimia.Extensions.Discovery.Attributes.Tests
             Assert.Equal(1, attributeDiscover.GetMethodAttributeDiscoveredHandlers(typeof(TestMethodHandlerAttribute)).Count());
             Assert.Equal(1, attributeDiscover.GetClassAttributeDiscoveredHandlers(typeof(TestClassHandlerAttribute)).Count());
             Assert.Equal(1, attributeDiscover.GetPropertyAttributeDiscoveredHandlers(typeof(TestPropertyHandlerAttribute)).Count());
+        }
+
+        [Fact]
+        public void AttributeDiscoverShouldGiveAttributeDiscoveredHandlerWithCorrectData()
+        {
+            // Arrange
+            var attributeDiscover = new AttributeDiscover();
+            attributeDiscover.RegisterStaticContainer(typeof(TestAttributeBeforeDiscoveredHandler));
+
+            // Act  
+            var methodHandler = attributeDiscover.GetMethodAttributeDiscoveredHandlers(typeof(TestMethodHandlerAttribute)).First();
+            var classHandler = attributeDiscover.GetClassAttributeDiscoveredHandlers(typeof(TestClassHandlerAttribute)).First();
+            var propertyHandler = attributeDiscover.GetPropertyAttributeDiscoveredHandlers(typeof(TestPropertyHandlerAttribute)).First();
+
+            // Assert
+            Assert.Equal(typeof(TestAttributeBeforeDiscoveredHandler), methodHandler.ContainerType);
+            Assert.Equal(typeof(TestAttributeBeforeDiscoveredHandler), classHandler.ContainerType);
+            Assert.Equal(typeof(TestAttributeBeforeDiscoveredHandler), propertyHandler.ContainerType);
+            Assert.Equal(typeof(TestMethodHandlerAttribute), methodHandler.HandlerAttributeType);
+            Assert.Equal(typeof(TestClassHandlerAttribute), classHandler.HandlerAttributeType);
+            Assert.Equal(typeof(TestPropertyHandlerAttribute), propertyHandler.HandlerAttributeType);
+            Assert.Equal(typeof(TestMethodHandlerAttribute), methodHandler.HandlerAttribute.HandlerAttributeType);
+            Assert.Equal(typeof(TestClassHandlerAttribute), classHandler.HandlerAttribute.HandlerAttributeType);
+            Assert.Equal(typeof(TestPropertyHandlerAttribute), propertyHandler.HandlerAttribute.HandlerAttributeType);
+            Assert.Equal(false, methodHandler.HandlerAttribute.HandleAlreadyDiscoveredAttributes);
+            Assert.Equal(false, classHandler.HandlerAttribute.HandleAlreadyDiscoveredAttributes);
+            Assert.Equal(false, propertyHandler.HandlerAttribute.HandleAlreadyDiscoveredAttributes);
         }
 
         [Fact]
