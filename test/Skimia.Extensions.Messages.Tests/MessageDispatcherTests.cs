@@ -158,7 +158,7 @@ namespace Skimia.Extensions.Messages.Tests
 
             // Act  
             messageDispatcher.Enqueue(message);
-            message.Wait(TimeSpan.FromMilliseconds(100));
+            message.Wait();
 
             // Assert
             Assert.Equal(1, TestMessageHandler.HandlersCalled);
