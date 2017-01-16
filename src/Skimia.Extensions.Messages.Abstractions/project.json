@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "NETStandard.Library": "1.6.0",
+    "NETStandard.Library": "1.6.1",
     "Skimia.Extensions.Discovery.Attributes.Abstractions": "0.3.0-dev"
   },
   "frameworks": {

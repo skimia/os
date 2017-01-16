@@ -38,20 +38,30 @@ namespace SkimiaOS.ApiHost
 
             base.ConfigureServices(services);
 
+            //pr extcore
+            RebuildServiceProvider(services);
+
             LoadExtensionInDiscover();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public override void Configure(IApplicationBuilder app)
         {
             app.UseMvc();
-
             base.Configure(app);
+        }
+
+        private void RebuildServiceProvider(IServiceCollection services)
+        {
+            serviceProvider = services.BuildServiceProvider();
+            foreach (IExtension extension in ExtensionManager.Extensions)
+                extension.SetServiceProvider(this.serviceProvider);
         }
 
         private void LoadExtensionInDiscover()
         {
-            var discover = serviceProvider.GetService<IAttributeDiscover>();
+            var discover = serviceProvider.GetRequiredService<IAttributeDiscover>();
             discover.RegisterAssemblies(ExtensionManager.Assemblies);
         }
     }
