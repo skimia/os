@@ -4,7 +4,8 @@
     "Moq": "4.6.38-alpha",
     "Skimia.Extensions.Discovery.Attributes": "0.3.0-dev",
     "Skimia.Extensions.Discovery.Attributes.Abstractions": "0.3.0-dev",
-    "xunit": "2.2.0-beta4-build3444"
+    "xunit": "2.2.0-beta3-build3402",
+    "xunit.runner.visualstudio": "2.2.0-beta3-build1187"
   },
   "frameworks": {
     "netcoreapp1.0": {

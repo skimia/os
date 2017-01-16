@@ -1,6 +1,9 @@
-﻿using System;
+using System;
 using Skimia.Extensions.Discovery.Attributes.Abstractions;
 using Skimia.Extensions.Messages.Abstractions;
+
+using System.Reflection;
+using Skimia.Extensions.Reflection;
 
 namespace Skimia.Extensions.Messages
 {
@@ -58,6 +61,15 @@ namespace Skimia.Extensions.Messages
 
         private Action<object, object, IMessage> CreateAction(IMethodHandler methodHandler)
         {
+            var parameters = methodHandler.MethodInfo.GetParameters();
+            if (parameters.Length != 2
+                || (parameters[0].ParameterType != typeof(object))
+                || (!parameters[1].ParameterType.HasInterface(typeof(IMessage)) && parameters[1].ParameterType != typeof(IMessage))
+                )
+            {
+                throw new ArgumentException(string.Format("Message handler {0} has incorrect parameters. Right definition is Handler(object, IMessage)", methodHandler.MethodInfo));
+            }
+
             Action<object, object, IMessage> handlerDelegate;
             try
             {
@@ -65,7 +77,7 @@ namespace Skimia.Extensions.Messages
             }
             catch (Exception)
             {
-                throw new ArgumentException(string.Format("Method handler {0} has incorrect parameters. Right definition is Handler(object, IMessage)", methodHandler.MethodInfo));
+                throw new ArgumentException(string.Format("Message handler {0} has incorrect parameters. Right definition is Handler(object, IMessage)", methodHandler.MethodInfo));
             }
 
             return handlerDelegate;

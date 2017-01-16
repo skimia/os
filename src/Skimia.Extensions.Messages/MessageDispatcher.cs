@@ -11,8 +11,8 @@ namespace Skimia.Extensions.Messages
 {
     public class MessageDispatcher : IMessageDispatcher
     {
-        private SortedDictionary<MessagePriority, Queue<Tuple<IMessage, object>>> _messagesToDispatch = new SortedDictionary<MessagePriority, Queue<Tuple<IMessage, object>>>();
-        private Dictionary<Type, List<IMessageHandler>> _messageHandlers = new Dictionary<Type, List<IMessageHandler>>();
+        private readonly SortedDictionary<MessagePriority, Queue<Tuple<IMessage, object>>> _messagesToDispatch = new SortedDictionary<MessagePriority, Queue<Tuple<IMessage, object>>>();
+        private readonly Dictionary<Type, List<IMessageHandler>> _messageHandlers = new Dictionary<Type, List<IMessageHandler>>();
         private int _currentThreadId;
         private object _currentProcessor;
 
@@ -20,8 +20,9 @@ namespace Skimia.Extensions.Messages
 
         public int CurrentThreadId => _currentThreadId;
 
-        private ManualResetEventSlim _resumeEvent = new ManualResetEventSlim(true);
-        private ManualResetEventSlim _messageEnqueuedEvent = new ManualResetEventSlim(false);
+
+        private readonly ManualResetEventSlim _resumeEvent = new ManualResetEventSlim(true);
+        private readonly ManualResetEventSlim _messageEnqueuedEvent = new ManualResetEventSlim(false);
 
         private bool _stopped;
         private bool _dispatching;
@@ -30,10 +31,9 @@ namespace Skimia.Extensions.Messages
 
         public event Action<IMessageDispatcher, IMessage> MessageDispatched;
 
-        protected void OnMessageDispatched(IMessage message)
+        private void OnMessageDispatched(IMessage message)
         {
-            if (MessageDispatched != null)
-                MessageDispatched(this, message);
+            MessageDispatched?.Invoke(this, message);
         }
 
         public MessageDispatcher()
@@ -44,7 +44,7 @@ namespace Skimia.Extensions.Messages
             }
         }
 
-        protected IEnumerable<IMessageHandler> GetHandlers(Type messageType, object token)
+        public IEnumerable<IMessageHandler> GetHandlers(Type messageType, object token = null)
         {
 
                 List<IMessageHandler> handlersList;
