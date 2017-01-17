@@ -20,6 +20,7 @@ namespace Skimia.Extensions.Messages
 
         public int CurrentThreadId => _currentThreadId;
 
+
         private readonly ManualResetEventSlim _resumeEvent = new ManualResetEventSlim(true);
         private readonly ManualResetEventSlim _messageEnqueuedEvent = new ManualResetEventSlim(false);
 

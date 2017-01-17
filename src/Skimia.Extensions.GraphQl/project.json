@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1-dev",
+  "buildOptions": { "embed": [ "Views/**" ] },
+  "dependencies": {
+    "ExtCore.Mvc.Infrastructure": "1.1.0",
+    "GraphQLCore": "1.0.0-alpha-0111",
+    "Microsoft.AspNetCore.Mvc": "1.1.0",
+    "NETStandard.Library": "1.6.1",
+    "System.Linq.Queryable": "4.3.0"
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    }
+  }
+}
