@@ -25,7 +25,8 @@
     "Microsoft.Extensions.Logging": "1.1.0",
     "Microsoft.Extensions.Logging.Console": "1.1.0",
     "Microsoft.Extensions.Logging.Debug": "1.1.0",
-    "Skimia.Extensions.GraphQl": "0.0.1-dev"
+    "Skimia.Extensions.GraphQl": "0.0.1-dev",
+    "Skimia.Plugins.Auth": "0.1.0-dev"
   },
   "frameworks": {
     "netcoreapp1.0": {

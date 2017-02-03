@@ -11,6 +11,7 @@ namespace SkimiaOS.ApiHost
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseKestrel()
                 .UseIISIntegration()
+                .UseUrls("http://::80", "http://0.0.0.0:80")
                 .UseStartup<Startup>()
                 .Build();
 

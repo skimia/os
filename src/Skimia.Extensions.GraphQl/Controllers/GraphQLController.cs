@@ -13,7 +13,12 @@ namespace Skimia.Extensions.GraphQl.Controllers
 {
     public class GraphQlController : Controller
     {
-        private readonly RootSchema _schema = new RootSchema();
+        public GraphQlController(RootSchema schema)
+        {
+            _schema = schema;
+        }
+
+        private readonly RootSchema _schema;
 
         [Route("api/graph.ql")]
         [HttpPost]
