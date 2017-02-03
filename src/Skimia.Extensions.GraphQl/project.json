@@ -3,9 +3,10 @@
   "buildOptions": { "embed": [ "Views/**" ] },
   "dependencies": {
     "ExtCore.Mvc.Infrastructure": "1.1.0",
-    "GraphQLCore": "1.0.0-alpha-0111",
+    "GraphQLCore": "1.0.0-alpha-0123",
     "Microsoft.AspNetCore.Mvc": "1.1.0",
     "NETStandard.Library": "1.6.1",
+    "Skimia.Extensions.Discovery.Attributes.Abstractions": "0.3.0-dev",
     "System.Linq.Queryable": "4.3.0"
   },
 

@@ -384,7 +384,7 @@ namespace Skimia.Extensions.Discovery.Attributes
             if (!_attributeClassHandlers[assembly].ContainsKey(attribute.GetType()))
                 _attributeClassHandlers[assembly].Add(attribute.GetType(), new List<IClassHandler>());
 
-            var handler = new ClassHandler(attribute);
+            var handler = new ClassHandler(attribute, containerType, container);
 
             _attributeClassHandlers[assembly][attribute.GetType()].Add(handler);
 
