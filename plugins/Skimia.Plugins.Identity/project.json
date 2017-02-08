@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "ExtCore.Data.Abstractions": "1.1.0",
+    "ExtCore.Infrastructure": "1.1.0",
+    "GraphQLCore": "1.0.0-alpha-0123",
+    "NETStandard.Library": "1.6.1",
+    "Skimia.Extensions.GraphQl": "0.0.1-dev",
+    "Skimia.Plugins.Identity.Data.Abstractions": "1.0.0-*",
+    "Skimia.Plugins.Identity.Data.EntityFramework.Sqlite": "1.0.0-*",
+    "Skimia.Plugins.Identity.Data.Models": "1.0.0-*"
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    }
+  }
+}

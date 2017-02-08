@@ -9,6 +9,8 @@
       "type": "platform"
     },
     "ExtCore.WebApplication": "1.1.0",
+    "ExtCore.Data": "1.1.0",
+    "ExtCore.Data.EntityFramework.Sqlite": "1.1.0",
     "Skimia.Extensions.Discovery.Attributes": "0.3.0-dev",
     "Skimia.Extensions.Discovery.Attributes.Abstractions": "0.3.0-dev",
     "Skimia.Extensions.Messages.Abstractions": "0.1.0-dev",
@@ -26,7 +28,9 @@
     "Microsoft.Extensions.Logging.Console": "1.1.0",
     "Microsoft.Extensions.Logging.Debug": "1.1.0",
     "Skimia.Extensions.GraphQl": "0.0.1-dev",
-    "Skimia.Plugins.Auth": "0.1.0-dev"
+    "Microsoft.AspNetCore.Cors": "1.1.0",
+    "Skimia.Plugins.Identity": "1.0.0-*",
+    "Skimia.Plugins.StaticFront": "1.0.0-*"
   },
   "frameworks": {
     "netcoreapp1.0": {

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GraphQLCore.Type;
+using Microsoft.Extensions.DependencyInjection;
 using Skimia.Extensions.Discovery.Attributes.Abstractions;
 using Skimia.Extensions.GraphQl.Attributes;
 
@@ -13,21 +14,23 @@ namespace Skimia.Extensions.GraphQl.Schema
 {
     public class RootSchema : GraphQLSchema
     {
-        private Query _rootQuery;
-        public RootSchema(IAttributeDiscover discover, Query rootQuery)
+        private IServiceProvider _serviceProvider;
+        public RootSchema(IAttributeDiscover discover, Query rootQuery, Mutation rootMutation, IServiceProvider serviceProvider)
         {
-            _rootQuery = rootQuery;
-            this.AddKnownType(_rootQuery);
-            this.Query(_rootQuery);
+            _serviceProvider = serviceProvider;
+            this.AddKnownType(rootQuery);
+            this.AddKnownType(rootMutation);
+            this.Query(rootQuery);
+            this.Mutation(rootMutation);
 
             //should use better implementation
             discover.RegisterInstanceContainer(this);
         }
 
         [ClassAttributeDiscoveredHandler(typeof(GraphQlTypeAttribute))]
-        public void RegisterTestClassHandler(IClassHandler handler, GraphQlTypeAttribute graphQlAttribute)
+        public void RegisterTypeHandler(IClassHandler handler, GraphQlTypeAttribute graphQlAttribute)
         {
-            AddKnownType( (GraphQLBaseType)(handler.Container ?? Activator.CreateInstance(handler.ContainerType, _rootQuery)) );
+            AddKnownType( (GraphQLBaseType)_serviceProvider.GetRequiredService(handler.ContainerType) );
         }
     }
 }

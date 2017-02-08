@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Skimia.Plugins.Auth")]
+[assembly: AssemblyProduct("Skimia.Plugins.Identity.Data.Abstractions")]
 [assembly: AssemblyTrademark("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -16,4 +16,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("b143be62-dbea-4f9c-8501-0f0a25cc439c")]
+[assembly: Guid("ddcfa9d7-1c49-47bd-86df-e48d1c859a0d")]
