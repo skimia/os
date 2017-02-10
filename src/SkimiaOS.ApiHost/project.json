@@ -40,9 +40,12 @@
       ]
     }
   },
+  
   "publishOptions": {
     "include": [
-      "wwwroot",
+      "apps",
+      "db.sqlite",
+      "Plugins",
       "**/*.cshtml",
       "config.json",
       "web.config"

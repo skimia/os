@@ -24,6 +24,9 @@ namespace Skimia.Plugins.StaticFront
                 {
                     [2000] = appBuilder =>
                     {
+                        //config to be deplaced in apps with automatic resolution (in this case 
+                        // get config from local config file (in dir) (keeps no exposed)
+                        // for configuration use simple yml files (deny all *.yml|*.yaml)
                         var baseDir = new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), @"apps"));
                         IEnumerable<DirectoryInfo> apps = baseDir.EnumerateDirectories();
 
@@ -36,9 +39,7 @@ namespace Skimia.Plugins.StaticFront
                             AddApplication(appBuilder, fileProvider, baseUrl);
                         }
 
-                        //config to be deplaced in apps with automatic resolution (in this case 
-                        // get config from local config file (in dir) (keeps no exposed)
-                        // for configuration use simple yml files (deny all *.yml|*.yaml)
+                        
                         
                        
                     }
