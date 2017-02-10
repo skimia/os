@@ -8,6 +8,8 @@ using Newtonsoft.Json;
 using Skimia.Extensions.GraphQl.Schema;
 using Skimia.Extensions.GraphQl.Models;
 using System.Linq;
+using GraphQLCore.Language;
+using Microsoft.AspNetCore.Cors;
 
 namespace Skimia.Extensions.GraphQl.Controllers
 {
@@ -22,8 +24,10 @@ namespace Skimia.Extensions.GraphQl.Controllers
 
         [Route("api/graph.ql")]
         [HttpPost]
+        [EnableCors("AllowAnyOriginHeadersAndMethods")]
         public JsonResult QlIndex([FromBody] GraphiQLInput input)
         {
+            { var doc = new Parser(new Lexer()).Parse(new Source(input.query));}
             try
             {
                 return this.Json(

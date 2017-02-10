@@ -1,4 +1,5 @@
 ﻿using System;
+using ExtCore.Data.EntityFramework.Sqlite;
 using ExtCore.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,6 +34,18 @@ namespace SkimiaOS.ApiHost
         {
             // Add framework services.
             services.AddMvc();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAnyOriginHeadersAndMethods",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials();
+                    }
+                );
+            });
             services.AddDiscovery();
             services.AddMessages();
 
@@ -43,11 +56,17 @@ namespace SkimiaOS.ApiHost
 
             LoadExtensionInDiscover();
 
+            //sure db is OK!
+            
+            var s = ExtensionManager.GetInstance<Storage>();
+            s.StorageContext.Database.EnsureCreated();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public override void Configure(IApplicationBuilder app)
         {
+            //can be mloved in another pluggin
             app.UseMvc();
             base.Configure(app);
         }

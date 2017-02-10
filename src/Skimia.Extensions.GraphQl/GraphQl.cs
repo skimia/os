@@ -9,7 +9,7 @@ namespace Skimia.Extensions.GraphQl
 {
     public class GraphQl : ExtensionBase
     {
-        public override string Name => "Skimia.Plugins.Auth";
+        public override string Name => "Skimia.Extensions.GraphQl";
 
         public override IEnumerable<KeyValuePair<int, Action<IServiceCollection>>> ConfigureServicesActionsByPriorities
         {
@@ -21,6 +21,7 @@ namespace Skimia.Extensions.GraphQl
                     {
                         collection.AddSingleton<RootSchema>();
                         collection.AddSingleton<Query>();
+                        collection.AddSingleton<Mutation>();
                     }
                 };
             }
