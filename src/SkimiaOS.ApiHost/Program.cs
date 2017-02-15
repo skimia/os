@@ -12,7 +12,7 @@ namespace SkimiaOS.ApiHost
         {
             var hostOptions = GetHostOptions();
 
-            IEnumerable<string> urls = hostOptions.Urls ?? new string[] { "http://::80", "http://0.0.0.0:80" };
+            IEnumerable<string> urls = hostOptions.Urls ?? new string[] { "http://localhost:5000" };
             var host = new WebHostBuilder()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseKestrel()
