@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ExtCore.Data.Abstractions;
+using System.Text;
 using ExtCore.Data.EntityFramework.Sqlite;
 using ExtCore.Infrastructure;
 using Microsoft.AspNetCore.Builder;
@@ -24,19 +22,42 @@ namespace Skimia.Plugins.Identity
             {
                 return new Dictionary<int, Action<IServiceCollection>>()
                 {
-                    [1000] = collection =>
+                    [1000] = services =>
                     {
-                        var s = ExtensionManager.GetInstance<Storage>();
-                        collection.AddSingleton<StorageContext>(s.StorageContext);
-
-                        collection.AddIdentity<User, IdentityRole>()
+                        services.AddIdentity<User, Role>()
                             .AddEntityFrameworkStores<StorageContext>()
                             .AddDefaultTokenProviders();
 
-                        collection.AddSingleton<Schema.Identity>();
-                        collection.AddSingleton<UserRegistrationInputObject>();
-                        collection.AddSingleton<IdentityResultObject>();
-                        collection.AddSingleton<IdentityErrorObject>();
+                        services.Configure<IdentityOptions>(options =>
+                        {
+                            // Password settings
+                            options.Password.RequireDigit = true;
+                            options.Password.RequiredLength = 8;
+                            options.Password.RequireNonAlphanumeric = false;
+                            options.Password.RequireUppercase = false;
+                            options.Password.RequireLowercase = false;
+
+                            // Lockout settings
+                            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                            options.Lockout.MaxFailedAccessAttempts = 10;
+
+                            // Cookie settings
+                            options.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(150);
+                            options.Cookies.ApplicationCookie.LoginPath = "/api/graph.ql";
+                            options.Cookies.ApplicationCookie.LogoutPath = "/api/private.graph.ql";
+
+                            // User settings
+                            options.User.RequireUniqueEmail = true;
+                        });
+
+                    },
+                    [2000] = services =>
+                    {
+                        //Graph types
+                        services.AddSingleton<Schema.Identity>();
+                        services.AddSingleton<UserRegistrationInputObject>();
+                        services.AddSingleton<IdentityResultObject>();
+                        services.AddSingleton<IdentityErrorObject>();
 
                     }
                 };
@@ -49,10 +70,9 @@ namespace Skimia.Plugins.Identity
             {
                 return new Dictionary<int, Action<IApplicationBuilder>>()
                 {
-                    [2000] = appBuilder =>
+                    [1000] = app =>
                     {
-                        appBuilder.UseIdentity();
-                       
+                        app.UseIdentity();
                     }
                 };
             }

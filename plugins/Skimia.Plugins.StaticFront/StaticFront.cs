@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using ExtCore.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.AspNetCore.Rewrite.Internal;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Skimia.Plugins.StaticFront.Configuration;
+using RewriteOptions = Microsoft.AspNetCore.Rewrite.RewriteOptions;
 
 namespace Skimia.Plugins.StaticFront
 {
@@ -20,56 +24,115 @@ namespace Skimia.Plugins.StaticFront
         {
             get
             {
+                //Adds An extension to handle configuration validation
+                // see http://stackoverflow.com/a/32794820/7043816
+                var staticFilesConfig = configurationRoot.GetSection("Plugins:StaticFiles").Get<StaticFilesOptions>();
+
+                if (staticFilesConfig == null)
+                {
+                    return new Dictionary<int, Action<IApplicationBuilder>>();
+                }
+
+                var apps = new Dictionary<ApplicationOptions,IFileProvider>();
+
+                if (staticFilesConfig.AutomaticResolution)
+                {
+
+                    var baseDir = new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), staticFilesConfig.Path));
+                    if (baseDir.Exists)
+                    {
+                        IEnumerable<DirectoryInfo> appsDirectories = baseDir.EnumerateDirectories();
+
+                        foreach (var appDirectory in appsDirectories)
+                        {
+                            var appOptions = new ApplicationOptions()
+                            {
+                                BindTo = "/" + appDirectory.Name,
+                                Name = appDirectory.Name,
+                                Rewrite = new Configuration.RewriteOptions(),
+                                Path = appDirectory.FullName
+
+                            };
+
+                            var fileProvider = new PhysicalFileProvider(appDirectory.FullName);
+
+                            if (fileProvider.GetFileInfo(Configuration.RewriteOptions.ApacheDefaultFile).Exists)
+                            {
+                                appOptions.Rewrite.Apache = Configuration.RewriteOptions.ApacheDefaultFile;
+                            }
+
+                            apps.Add(appOptions, fileProvider);
+                        }
+                    }
+                    
+                }
+                else if(staticFilesConfig.Applications != null && staticFilesConfig.Applications.Any())
+                {
+                    foreach (var webApp in staticFilesConfig.Applications)
+                    {
+                        webApp.Path = Path.Combine(Directory.GetCurrentDirectory(), webApp.Path);
+                        if (webApp.Path != null && ( new DirectoryInfo(webApp.Path).Exists ))
+                        {
+                            var fileProvider = new PhysicalFileProvider(webApp.Path);
+                            apps.Add(webApp, fileProvider);
+                        }
+                        
+                    }
+                    
+                }
+
                 return new Dictionary<int, Action<IApplicationBuilder>>()
                 {
-                    [2000] = appBuilder =>
+
+                    [3000] = app =>
                     {
-                        //config to be deplaced in apps with automatic resolution (in this case 
-                        // get config from local config file (in dir) (keeps no exposed)
-                        // for configuration use simple yml files (deny all *.yml|*.yaml)
-                        var baseDir = new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), @"apps"));
-                        IEnumerable<DirectoryInfo> apps = baseDir.EnumerateDirectories();
-
-                        foreach (var app in apps)
+                        foreach (var appDefinition in apps)
                         {
-                            
-                            PathString baseUrl = app.Name == "os.web" ? new PathString("/"): new PathString("/"+ app.Name) ;
-                            var fileProvider = new PhysicalFileProvider(app.FullName);
-
-                            AddApplication(appBuilder, fileProvider, baseUrl);
+                            AddApplicationRewrite(app, appDefinition.Key, appDefinition.Value);
                         }
-
-                        
-                        
-                       
+                    },
+                    [4000] = app =>
+                    {
+                        foreach (var appDefinition in apps)
+                        {
+                            AddApplicationStatics(app, appDefinition.Key, appDefinition.Value);
+                        }
                     }
                 };
             }
         }
 
-        public void AddApplication(IApplicationBuilder app, IFileProvider fileProvider, PathString baseUrl)
+        private void AddApplicationStatics(IApplicationBuilder app, ApplicationOptions webApp, IFileProvider fileProvider)
         {
-            baseUrl = baseUrl.Equals(new PathString("/")) ? null : baseUrl;
-            //if has apache config
-            if (fileProvider.GetFileInfo("rewrite.apache").Exists)
-            {
-                var options = new RewriteOptions()
-                    .AddApacheModRewrite(fileProvider, "rewrite.apache");
-                options.StaticFileProvider = fileProvider;
-                app.UseRewriter(options);
-            }
-            else
-            {
-                app.UseDefaultFiles();
-            }
-            
-
+            var baseUrl = webApp.BindTo.Equals(new PathString("/")) ? null : webApp.BindTo;
             app.UseStaticFiles(new StaticFileOptions()
             {
                 FileProvider = fileProvider,
                 RequestPath = baseUrl
             });
+        }
 
+        private void AddApplicationRewrite(IApplicationBuilder app, ApplicationOptions webApp, IFileProvider fileProvider)
+        {
+            var baseUrl = webApp.BindTo.Equals(new PathString("/")) ? null : webApp.BindTo;
+            //if has apache config
+            if ( !string.IsNullOrEmpty(webApp.Rewrite?.Apache) && fileProvider.GetFileInfo(webApp.Rewrite.Apache).Exists)
+            {
+                var options = new RewriteOptions()
+                    .AddApacheModRewrite(fileProvider, webApp.Rewrite.Apache);
+                options.StaticFileProvider = fileProvider;
+                app.UseRewriter(options);
+            }
+            else
+            {
+                app.UseDefaultFiles(new DefaultFilesOptions()
+                {
+                    FileProvider = fileProvider,
+                    RequestPath = baseUrl
+                });
+            }
+
+            //if directory
             if (this.serviceProvider.GetService<IHostingEnvironment>().IsDevelopment())
             {
                 app.UseDirectoryBrowser(new DirectoryBrowserOptions()

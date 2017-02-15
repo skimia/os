@@ -46,3 +46,62 @@ docker run -ti -p 80 skimia/os
 ## Contributing
 
 We currently follow the these [contributing guidelines.](https://github.com/skimia/os/blob/master/CONTRIBUTING.md)
+
+## Configuration
+
+### Global Options (Main Application)
+
+#### Hosting Options
+
+##### Urls
+
+define the URLs Kestrel would bind to **default:** `http://localhost:5000`
+
+#### ExtCore Options
+
+##### Extensions
+
+define the extensions directory used by ExtCore
+
+```json
+{
+  "Host":{
+    "Urls":["http://::80", "http://0.0.0.0:80"]
+  },
+  "Logging": {
+    "IncludeScopes": false,
+    "LogLevel": {
+      "Default": "Debug",
+      "System": "Information",
+      "Microsoft": "Information"
+    }
+  },
+  "Extensions": {
+    // Please keep in mind that you have to change '\' to '/' on Linux-based systems
+    "Path": "\\Plugins"
+  },
+  "Data": {
+    "DefaultConnection": {
+      // Please keep in mind that you have to change '\' to '/' on Linux-based systems
+      "ConnectionString": "Data Source=..\\..\\..\\db.sqlite"
+    }
+  },
+  "Plugins": {
+    "StaticFiles": {
+      "Path": "apps",
+      "AutomaticResolution":  false,
+      "Applications": [
+        {
+          "Name": "os.web",
+          "Path": "apps\\os.web",
+          "BindTo": "/",
+          "Rewrite": {
+            "Apache": "rewrite.apache"
+          }
+        }
+      ]
+    }
+  }
+}
+
+```

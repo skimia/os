@@ -9,7 +9,7 @@ using Skimia.Plugins.Identity.Data.Models;
 
 namespace Skimia.Plugins.Identity.Data.EntityFramework.Sqlite
 {
-    public class ModelRegistar : ModelRegistar<User,IdentityRole,string>, IModelRegistrar
+    public class ModelRegistar : ModelRegistar<User,Role,string>, IModelRegistrar
     {
         
     }
