@@ -13,6 +13,6 @@ namespace Skimia.Plugins.StaticFront.Configuration
 
         public string BindTo { get; set; }
 
-        public RewriteOptions Rewrite { get; set; }
+        public RewriteOptions Rewrite { get; set; } = new RewriteOptions();
     }
 }

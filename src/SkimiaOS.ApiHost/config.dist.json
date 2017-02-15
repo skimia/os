@@ -1,6 +1,6 @@
 ﻿{
-  "Host":{
-    "Urls":["http://::80", "http://0.0.0.0:80"]
+  "Host": {
+    "Urls": [ "http://::80", "http://0.0.0.0:80" ]
   },
   "Logging": {
     "IncludeScopes": false,
@@ -23,7 +23,7 @@
   "Plugins": {
     "StaticFiles": {
       "Path": "apps",
-      "AutomaticResolution":  false, 
+      "AutomaticResolution": false,
       "Applications": [
         {
           "Name": "os.web",
@@ -35,5 +35,5 @@
         }
       ]
     }
-  } 
+  }
 }

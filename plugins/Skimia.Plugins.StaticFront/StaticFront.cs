@@ -39,6 +39,7 @@ namespace Skimia.Plugins.StaticFront
                 {
 
                     var baseDir = new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), staticFilesConfig.Path));
+
                     if (baseDir.Exists)
                     {
                         IEnumerable<DirectoryInfo> appsDirectories = baseDir.EnumerateDirectories();
@@ -49,17 +50,11 @@ namespace Skimia.Plugins.StaticFront
                             {
                                 BindTo = "/" + appDirectory.Name,
                                 Name = appDirectory.Name,
-                                Rewrite = new Configuration.RewriteOptions(),
                                 Path = appDirectory.FullName
 
                             };
 
                             var fileProvider = new PhysicalFileProvider(appDirectory.FullName);
-
-                            if (fileProvider.GetFileInfo(Configuration.RewriteOptions.ApacheDefaultFile).Exists)
-                            {
-                                appOptions.Rewrite.Apache = Configuration.RewriteOptions.ApacheDefaultFile;
-                            }
 
                             apps.Add(appOptions, fileProvider);
                         }
