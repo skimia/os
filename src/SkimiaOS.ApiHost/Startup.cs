@@ -51,24 +51,25 @@ namespace SkimiaOS.ApiHost
 
             base.ConfigureServices(services);
 
-            //pr extcore
+            //ensure maindbcontext from ExtCore
+            var s = ExtensionManager.GetInstance<Storage>();
+            services.AddSingleton(s.StorageContext);
+
             RebuildServiceProvider(services);
+            //sure db is OK!
+            s.StorageContext.Database.EnsureCreated();
 
             LoadExtensionInDiscover();
 
-            //sure db is OK!
             
-            var s = ExtensionManager.GetInstance<Storage>();
-            s.StorageContext.Database.EnsureCreated();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public override void Configure(IApplicationBuilder app)
         {
+            base.Configure(app);
             //can be mloved in another pluggin
             app.UseMvc();
-            base.Configure(app);
         }
 
         private void RebuildServiceProvider(IServiceCollection services)
