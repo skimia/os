@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ExtCore.Data.EntityFramework.Sqlite;
 using ExtCore.Infrastructure;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Skimia.Plugins.Identity.Data.Models;
 using Skimia.Plugins.Identity.Schema.Input;
@@ -41,12 +42,12 @@ namespace Skimia.Plugins.Identity
 
                             // Cookie settings
                             options.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(150);
-                            options.Cookies.ApplicationCookie.LoginPath = "/api/graph.ql";
-                            options.Cookies.ApplicationCookie.LogoutPath = "/api/private.graph.ql";
 
                             // User settings
                             options.User.RequireUniqueEmail = true;
                         });
+
+                        services.Configure<IdentityOptions>(options => configurationRoot.GetSection("Plugins:Identity").Bind(options));
 
                     },
                     [2000] = services =>
