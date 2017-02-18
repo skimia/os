@@ -1,12 +1,11 @@
-﻿using System;
-using System.Linq;
-using ExtCore.Data.Abstractions;
+﻿using System.Threading.Tasks;
 using GraphQLCore.Type;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Skimia.Extensions.GraphQl.Attributes;
 using Skimia.Extensions.GraphQl.Schema;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Skimia.Extensions.GraphQl.Type;
 using Skimia.Plugins.Identity.Data.Models;
 using Skimia.Plugins.Identity.Schema.Input.Model;
 
@@ -16,58 +15,81 @@ namespace Skimia.Plugins.Identity.Schema
     [GraphQlType]
     public class Identity : GraphQLObjectType
     {
+
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILogger _logger;
+
+
         public Identity(
+            IHttpContextAccessor httpContextAccessor,
             Mutation mutation,
+            Query query,
             UserManager<User> userManager,
             SignInManager<User> signInManager, 
             ILoggerFactory loggerFactory) : base("Identity", "Identity Plugin GraphQl Namespace")
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _logger = loggerFactory.CreateLogger<Identity>();
 
-            this.Field("register", (UserRegistration user) => Register(user));
-            this.Field("authenticate", (string username, string password) => Authenticate(username, password));
+            _logger = loggerFactory.CreateLogger<Identity>();
+            _httpContextAccessor = httpContextAccessor;
+
+            this.Field("register", (UserRegistration user) => Register(user).GetAwaiter().GetResult());
+
+            this.Field("authenticate", 
+                (string username, string password) => 
+                    Authenticate(username, password).GetAwaiter().GetResult()
+                );
+
+
+            query.SecureField("me",
+                () => GetUserAsync().GetAwaiter().GetResult()
+            );
+                
 
             mutation.Field("identity", () => this);
         }
 
-        private IdentityResult Register(UserRegistration user)
+        private async Task<IdentityResult> Register(UserRegistration user)
         {
             var dbUser = new User { UserName = user.Username, Email = user.Email };
-            var result = _userManager.CreateAsync(dbUser, user.Password);
-            result.Wait();
+            var result = await _userManager.CreateAsync(dbUser, user.Password);
 
-            if (result.Result.Succeeded)
+            if (result.Succeeded)
             {
                 _logger.LogInformation(1, "User register.");
-                return result.Result;
+                return result;
             }
             _logger.LogWarning(2, "Invalid register attempt.");
-            return result.Result;
+            return result;
         }
 
-        private string Authenticate(string username, string password)
+        /// <summary>
+        /// Need to return an AuthenticateResult to can return SignIn Error Status & User if succeded
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        private async Task<string> Authenticate(string username, string password)
         {
-            var result = _signInManager.PasswordSignInAsync(username,password,false,true);
-            result.Wait();
-            if (result.Result.Succeeded)
+            var result = await _signInManager.PasswordSignInAsync(username,password,false,true);
+            if (result.Succeeded)
             {
                 _logger.LogInformation(1, "User logged in.");
-                return CreateToken();
+
+                return (await GetUserAsync()).UserName;
+                //return GetUserAsync().GetAwaiter().GetResult();
             }
             _logger.LogWarning(2, "Invalid login attempt.");
             return "error";
         }
 
-        private static string CreateToken()
+        private async Task<User> GetUserAsync()
         {
-            var time = BitConverter.GetBytes(DateTime.UtcNow.ToBinary());
-            var key = Guid.NewGuid().ToByteArray();
-            return Convert.ToBase64String(time.Concat(key).ToArray());
+            return await _userManager.GetUserAsync(this._httpContextAccessor.HttpContext.User);
         }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using ExtCore.Data.EntityFramework.Sqlite;
 using ExtCore.Infrastructure;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Skimia.Plugins.Identity.Data.Models;
 using Skimia.Plugins.Identity.Schema.Input;
@@ -58,6 +56,7 @@ namespace Skimia.Plugins.Identity
                         services.AddSingleton<UserRegistrationInputObject>();
                         services.AddSingleton<IdentityResultObject>();
                         services.AddSingleton<IdentityErrorObject>();
+                        services.AddSingleton<UserObject>();
 
                     }
                 };

@@ -4,7 +4,7 @@
   "dependencies": {
     "ExtCore.Data.Abstractions": "1.1.0",
     "ExtCore.Infrastructure": "1.1.0",
-    "GraphQLCore": "1.0.0-alpha-0123",
+    "GraphQLCore": "1.0.0-alpha-0126",
     "NETStandard.Library": "1.6.1",
     "Skimia.Extensions.GraphQl": "0.0.1-dev",
     "Skimia.Plugins.Identity.Data.Abstractions": "0.1.0-*",

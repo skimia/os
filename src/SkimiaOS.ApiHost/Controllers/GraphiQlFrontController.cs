@@ -1,13 +1,4 @@
-﻿using System;
-using System.Dynamic;
-using System.Net.Http;
-using ExtCore.Infrastructure;
-using GraphQLCore.Type;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Skimia.Extensions.GraphQl.Schema;
-using Skimia.Extensions.GraphQl.Models;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Skimia.Extensions.GraphQl.Controllers
 {
