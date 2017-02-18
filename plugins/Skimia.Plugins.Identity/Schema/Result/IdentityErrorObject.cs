@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GraphQLCore.Type;
+﻿using GraphQLCore.Type;
 using Microsoft.AspNetCore.Identity;
 using Skimia.Extensions.GraphQl.Attributes;
 
 namespace Skimia.Plugins.Identity.Schema.Result
 {
     [GraphQlType]
-    public class IdentityErrorObject :GraphQLObjectType<IdentityError>
+    public class IdentityErrorObject : GraphQLObjectType<IdentityError>
     {
         public IdentityErrorObject() : base("IdentityError", "error in an identity operation")
         {

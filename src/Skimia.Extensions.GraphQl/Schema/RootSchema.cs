@@ -2,9 +2,6 @@
  * for ?? operator show https://msdn.microsoft.com/fr-fr/library/ms173224.aspx
  */
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using GraphQLCore.Type;
 using Microsoft.Extensions.DependencyInjection;
 using Skimia.Extensions.Discovery.Attributes.Abstractions;

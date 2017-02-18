@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Skimia.Extensions.Messages.Abstractions;
 
 namespace Skimia.Extensions.Messages
 {

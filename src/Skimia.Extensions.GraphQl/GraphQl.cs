@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using ExtCore.Infrastructure;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
-using Skimia.Extensions.Discovery.Attributes.Abstractions;
+using ExtCore.Infrastructure;
 using Skimia.Extensions.GraphQl.Schema;
+using Skimia.Extensions.GraphQl.Type;
 
 namespace Skimia.Extensions.GraphQl
 {
     public class GraphQl : ExtensionBase
     {
+        public static IServiceProvider ServiceProvider;
+
         public override string Name => "Skimia.Extensions.GraphQl";
 
         public override IEnumerable<KeyValuePair<int, Action<IServiceCollection>>> ConfigureServicesActionsByPriorities
@@ -41,6 +40,7 @@ namespace Skimia.Extensions.GraphQl
                     [2000] = app =>
                     {
                         app.UseMvc();
+                        ServiceProvider = app.ApplicationServices;
                     }
                 };
             }

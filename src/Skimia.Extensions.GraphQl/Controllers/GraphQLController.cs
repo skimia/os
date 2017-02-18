@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Dynamic;
-using System.Net.Http;
-using ExtCore.Infrastructure;
-using GraphQLCore.Type;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Skimia.Extensions.GraphQl.Schema;
 using Skimia.Extensions.GraphQl.Models;
-using System.Linq;
-using GraphQLCore.Language;
 using Microsoft.AspNetCore.Cors;
 
 namespace Skimia.Extensions.GraphQl.Controllers
@@ -27,7 +22,6 @@ namespace Skimia.Extensions.GraphQl.Controllers
         [EnableCors("AllowAnyOriginHeadersAndMethods")]
         public JsonResult QlIndex([FromBody] GraphiQLInput input)
         {
-            { var doc = new Parser(new Lexer()).Parse(new Source(input.query));}
             try
             {
                 return this.Json(

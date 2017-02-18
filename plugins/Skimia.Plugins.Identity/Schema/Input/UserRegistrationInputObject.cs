@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GraphQLCore.Type;
+﻿using GraphQLCore.Type;
 using Skimia.Extensions.GraphQl.Attributes;
 using Skimia.Plugins.Identity.Schema.Input.Model;
 
