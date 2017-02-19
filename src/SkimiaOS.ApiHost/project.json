@@ -31,7 +31,8 @@
     "Microsoft.AspNetCore.Cors": "1.1.0",
     "Skimia.Plugins.Identity": "0.1.0-*",
     "Skimia.Plugins.StaticFront": "0.1.0-*",
-    "Skimia.Plugins.Glimpse": "0.1.0-dev"
+    "Skimia.Plugins.Glimpse": "0.1.0-dev",
+    "Skimia.Plugins.FrontConfig": "0.1.0-dev"
   },
   "frameworks": {
     "netcoreapp1.0": {
