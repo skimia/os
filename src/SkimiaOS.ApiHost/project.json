@@ -30,7 +30,8 @@
     "Skimia.Extensions.GraphQl": "0.0.1-dev",
     "Microsoft.AspNetCore.Cors": "1.1.0",
     "Skimia.Plugins.Identity": "0.1.0-*",
-    "Skimia.Plugins.StaticFront": "0.1.0-*"
+    "Skimia.Plugins.StaticFront": "0.1.0-*",
+    "Skimia.Plugins.Glimpse": "0.1.0-dev"
   },
   "frameworks": {
     "netcoreapp1.0": {
