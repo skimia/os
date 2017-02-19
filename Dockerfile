@@ -13,7 +13,7 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 #1 Update and install basic packages needed
 
 RUN sudo apt-get update
-RUN sudo apt-get install -y gettext zip unzip git uuid-runtime
+RUN sudo apt-get install -y gettext zip unzip git uuid-runtime psmisc
 
 #2 Add the new apt-get feed
 
@@ -23,19 +23,28 @@ RUN sudo apt-get update
 
 #3 Install .NET Core
 
-RUN sudo apt-get install -y dotnet-dev-1.0.0-preview2-003131
+RUN sudo apt-get install -y dotnet-dev-1.0.0-preview2-1-003177
 
 #4 Install Mono (Required by KoreBuild)
 
 RUN sudo apt-get install -y mono-devel
 
-#5 Get OS from local dir
+#5 Install node (Required by KoreBuild)
 
-COPY . /home/os
-RUN cd /home/os ; chmod +x ./build.sh && sleep 1 && ./build.sh
+RUN sudo apt-get install -y nodejs npm && sudo ln -s /usr/bin/nodejs /usr/local/bin/node && sudo ln -s /usr/bin/npm /usr/local/bin/npm
 
-EXPOSE 5000
+#6 Get OS from local dir
 
-#6 Run OS
+COPY . /home/os/git
 
-CMD cd /home/os/src/SkimiaOS.ApiHost ; dotnet run
+#RUN cd /home/os/git/ ; git submodule init ; git submodule update
+
+#7 Build OS
+
+RUN cd /home/os/git/src/SkimiaOS.ApiHost ; dotnet restore ; dotnet publish
+
+EXPOSE 80
+
+#8 Run OS
+
+CMD cd /home/os/git/src/SkimiaOS.ApiHost/bin/Debug/netcoreapp1.0/publish/ ; sudo /usr/bin/dotnet SkimiaOS.ApiHost.dll

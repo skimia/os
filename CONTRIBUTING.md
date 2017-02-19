@@ -277,7 +277,7 @@ In general there should be exactly one unit test assembly for each product runti
 
 #### Unit test class naming
 
-Test class names end with `Test` and live in the same namespace as the class being tested. For example, the unit tests for the `Microsoft.Fruit.Banana` class would be in a `Microsoft.Fruit.BananaTest` class in the test assembly.
+Test class names end with `Test` and live in the same namespace as the class being tested. For example, the unit tests for the `Microsoft.Fruit.Banana` class would be in a `Microsoft.Fruit.Tests.BananaTest` class in the test assembly.
 
 
 #### Unit test method naming
@@ -435,7 +435,8 @@ build (this will run the build and will pull in NuGet packages, etc.)
 
 GitHub supports Markdown in many places throughout the system (issues, comments, etc.). However, there are a few differences from regular Markdown that are described here:
 
-	https://help.github.com/articles/github-flavored-markdown
+
+  [github flavored markdown](https://help.github.com/articles/github-flavored-markdown)
 
 
 ### Including people in a GitHub discussion

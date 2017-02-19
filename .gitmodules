@@ -1,0 +1,3 @@
+[submodule "src/SkimiaOS.ApiHost/apps/os.web"]
+	path = src/SkimiaOS.ApiHost/apps/os.web
+	url = git://github.com/skimia/os.web.git

@@ -1,0 +1,19 @@
+{
+  "version": "0.1.0-dev",
+
+  "dependencies": {
+    "ExtCore.Data.EntityFramework.Sqlite": "1.1.0",
+    "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.1.0",
+    "Microsoft.EntityFrameworkCore": "1.1.0",
+    "Microsoft.EntityFrameworkCore.Sqlite": "1.1.0",
+    "NETStandard.Library": "1.6.1",
+    "Skimia.Plugins.Identity.Data.Abstractions": "0.1.0-*",
+    "Skimia.Plugins.Identity.Data.Models": "0.1.0-*"
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    }
+  }
+}

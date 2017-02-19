@@ -7,7 +7,13 @@ branches:
     - dev
     - /^(.*\/)?ci-.*$/
 build_script:
-  - build.cmd verify
+  - build.cmd --quiet --parallel verify
+
+on_success:
+  - packages\coveralls.io\tools\coveralls.net --opencover "artifacts\coverage.xml" --repo-token Cpw4IPLeby3Di2T9gWgpZvy2umPTdNMv4 --full-sources
 clone_depth: 1
+artifacts:
+  - path: 'artifacts\build\*.nupkg'
+    name: Nuget Packages
 test: off
 deploy: off
