@@ -19,10 +19,7 @@ namespace Skimia.Extensions.Messages
             set;
         }
 
-        public bool IsDispatched
-        {
-            get { return _dispatched; }
-        }
+        public bool IsDispatched => _dispatched;
 
         public MessagePriority Priority
         {

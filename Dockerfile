@@ -34,19 +34,16 @@ RUN sudo apt-get install -y mono-devel
 RUN sudo apt-get install -y nodejs npm && sudo ln -s /usr/bin/nodejs /usr/local/bin/node && sudo ln -s /usr/bin/npm /usr/local/bin/npm
 
 #6 Get OS from local dir
-
-COPY . /home/os/git
+COPY . /home/os
+RUN cd /home/os ; chmod +x ./build.sh && sleep 1 && ./build.sh repo-initialize
 
 #RUN cd /home/os/git/ ; git submodule init ; git submodule update
 
 #7 Build OS
-
-RUN cd /home/os/git ; chmod +x ./build.sh && sleep 1 && ./build.sh restore
-
-RUN cd /home/os/git/src/SkimiaOS.ApiHost ; dotnet publish
-
-EXPOSE 80
+RUN cd /home/os/src/SkimiaOS.ApiHost ; dotnet publish
 
 #8 Run OS
 
-CMD cd /home/os/git/src/SkimiaOS.ApiHost/bin/Debug/netcoreapp1.0/publish/ ; sudo /usr/bin/dotnet SkimiaOS.ApiHost.dll
+EXPOSE 5000
+WORKDIR /home/os/src/SkimiaOS.ApiHost/bin/Debug/netcoreapp1.0/publish/
+CMD ["sudo /usr/bin/dotnet SkimiaOS.ApiHost.dll"]

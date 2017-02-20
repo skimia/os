@@ -4,7 +4,7 @@ Skimia servier operating system for create distribued web apps
 [![Get My Slack Invite](https://slackin-skimiaos.herokuapp.com/badge.svg)](https://slackin-skimiaos.herokuapp.com/)
 
 [![license](https://img.shields.io/github/license/skimia/os.svg?maxAge=2592000&style=flat-square)](https://github.com/skimia/os/blob/master/LICENSE)
-[![Maintenance](https://img.shields.io/maintenance/yes/2016.svg?maxAge=2592000&style=flat-square)]()
+[![Maintenance](https://img.shields.io/maintenance/yes/2017.svg?maxAge=2592000&style=flat-square)]()
 
 ## Getting started
 
