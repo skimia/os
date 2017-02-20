@@ -44,8 +44,9 @@
         "RequireLowercase":false,
         "RequiredLength": 6
       }
+    },
+    "FrontConfig":{
+      "Path": "apps\\os.web\\app\\plugins"
     }
-  
-  
   }
 }

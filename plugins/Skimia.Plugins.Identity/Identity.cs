@@ -49,7 +49,6 @@ namespace Skimia.Plugins.Identity
                         });
 
                         services.Configure<IdentityOptions>(options => configurationRoot.GetSection("Plugins:Identity").Bind(options));
-
                     },
                     [2000] = services =>
                     {

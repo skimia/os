@@ -41,7 +41,9 @@ COPY . /home/os/git
 
 #7 Build OS
 
-RUN cd /home/os/git/src/SkimiaOS.ApiHost ; dotnet restore ; dotnet publish
+RUN cd /home/os/git ; chmod +x ./build.sh && sleep 1 && ./build.sh restore
+
+RUN cd /home/os/git/src/SkimiaOS.ApiHost ; dotnet publish
 
 EXPOSE 80
 
