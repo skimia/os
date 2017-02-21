@@ -50,6 +50,7 @@
       "Plugins",
       "**/*.cshtml",
       "config.json",
+      "config.dist.json",
       "web.config"
     ]
   },

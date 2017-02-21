@@ -5,7 +5,6 @@ MAINTAINER Skimia Agency <contact@skimia.agency>
 #0 fix
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV ASPNETCORE_SERVER.URLS=http://0.0.0.0:5000/
 ENV KOREBUILD_SKIP_RUNTIME_INSTALL true
 
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
@@ -44,6 +43,6 @@ RUN cd /home/os/src/SkimiaOS.ApiHost ; dotnet publish
 
 #8 Run OS
 
-EXPOSE 5000
+EXPOSE 80
 WORKDIR /home/os/src/SkimiaOS.ApiHost/bin/Debug/netcoreapp1.0/publish/
 CMD ["sudo /usr/bin/dotnet SkimiaOS.ApiHost.dll"]
