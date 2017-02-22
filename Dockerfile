@@ -77,5 +77,5 @@ RUN cd /home/os/src/SkimiaOS.ApiHost ; dotnet publish
 #9 Run OS
 
 EXPOSE 80
-WORKDIR /home/os/src/SkimiaOS.ApiHost/bin/Debug/netcoreapp1.0/publish/
+WORKDIR /home/os/src/SkimiaOS.ApiHost/bin/Debug/netcoreapp1.1/publish/
 CMD ["/usr/bin/dotnet SkimiaOS.ApiHost.dll"]
