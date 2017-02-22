@@ -24,13 +24,26 @@ RUN sudo apt-get update
 
 RUN sudo apt-get install -y dotnet-dev-1.0.0-preview2-1-003177
 
-#4 Install Mono (Required by KoreBuild)
+#4 Install Mono & node (Required by KoreBuild)
 
 RUN sudo apt-get install -y mono-devel
-
-#5 Install node (Required by KoreBuild)
-
 RUN sudo apt-get install -y nodejs npm && sudo ln -s /usr/bin/nodejs /usr/local/bin/node && sudo ln -s /usr/bin/npm /usr/local/bin/npm
+
+
+#4 Install libuv (Required by Kestrel)
+RUN apt-get -qqy install \
+	autoconf \
+	automake \
+	build-essential \
+	libtool
+RUN LIBUV_VERSION=1.4.2 \
+	&& curl -sSL https://github.com/libuv/libuv/archive/v${LIBUV_VERSION}.tar.gz | tar zxfv - -C /usr/local/src \
+	&& cd /usr/local/src/libuv-$LIBUV_VERSION \
+	&& sh autogen.sh && ./configure && make && make install \
+	&& rm -rf /usr/local/src/libuv-$LIBUV_VERSION \
+	&& ldconfig
+
+
 
 #6 Get OS from local dir
 COPY . /home/os
