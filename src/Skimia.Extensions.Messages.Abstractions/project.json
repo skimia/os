@@ -4,7 +4,7 @@
     "Skimia.Extensions.Discovery.Attributes.Abstractions": "0.3.0-dev"
   },
   "frameworks": {
-    "netstandard1.6": {
+    "netstandard1.6.1": {
       "imports": "dnxcore50"
     }
   },
