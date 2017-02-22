@@ -48,6 +48,7 @@ RUN apt-get update \
 #5 Install libuv (Required by Kestrel)
 
 RUN apt-get -qqy install \
+    curl \
 	autoconf \
 	automake \
 	build-essential \
