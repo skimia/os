@@ -43,8 +43,7 @@ RUN apt-get update \
 #3 Install .NET Core
         dotnet-dev-1.0.0-preview2-1-003177 \
 #4 Install Mono (Required by KoreBuild)
-        mono-devel \
-    && rm -rf /var/lib/apt/lists/*
+        mono-devel
 
 #5 Install libuv (Required by Kestrel)
 
@@ -60,19 +59,21 @@ RUN LIBUV_VERSION=1.4.2 \
 	&& rm -rf /usr/local/src/libuv-$LIBUV_VERSION \
 	&& ldconfig
 
+#6 Clean
 
+RUN rm -rf /var/lib/apt/lists/*
 
-#6 Get OS from local dir
+#7 Get OS from local dir
 
 COPY . /home/os
 RUN cd /home/os ; chmod +x ./build.sh && sleep 1 && ./build.sh repo-initialize
 
 #RUN cd /home/os/git/ ; git submodule init ; git submodule update
 
-#7 Build OS
+#8 Build OS
 RUN cd /home/os/src/SkimiaOS.ApiHost ; dotnet publish
 
-#8 Run OS
+#9 Run OS
 
 EXPOSE 80
 WORKDIR /home/os/src/SkimiaOS.ApiHost/bin/Debug/netcoreapp1.0/publish/
