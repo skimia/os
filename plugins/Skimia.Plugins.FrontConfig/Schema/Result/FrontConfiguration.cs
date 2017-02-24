@@ -11,11 +11,11 @@ namespace Skimia.Plugins.FrontConfig.Schema.Result
     {
         public FrontConfiguration() : base("FrontConfiguration", "represents the configuration of a plugin")
         {
-            this.Field("name", e => e.Name);
-            this.Field("otherwise", e => e.Otherwise);
-            this.Field("version", e => e.Version);
-            this.Field("assetsBeforeLoad", e => e.AssetsBeforeLoad);
-            this.Field("routing", e => e.Routing);
+            Field("name", e => e.Name);
+            Field("otherwise", e => e.Otherwise);
+            Field("version", e => e.Version);
+            Field("assetsBeforeLoad", e => e.AssetsBeforeLoad);
+            Field("routing", e => e.Routing);
         }
 
         public static bool HasField(string fieldName)

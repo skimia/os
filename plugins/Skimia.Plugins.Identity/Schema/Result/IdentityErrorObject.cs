@@ -9,8 +9,8 @@ namespace Skimia.Plugins.Identity.Schema.Result
     {
         public IdentityErrorObject() : base("IdentityError", "error in an identity operation")
         {
-            this.Field("code", e => e.Code);
-            this.Field("description", e => e.Description);
+            Field("code", e => e.Code);
+            Field("description", e => e.Description);
         }
     }
 }

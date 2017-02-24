@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Skimia.Plugins.FrontConfig.Configuration
 {
     public class FrontConfigOptions

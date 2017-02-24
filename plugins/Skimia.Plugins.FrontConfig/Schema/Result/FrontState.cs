@@ -11,10 +11,10 @@ namespace Skimia.Plugins.FrontConfig.Schema.Result
     {
         public FrontState() : base("FrontState", "represents a state configured by a plugin")
         {
-            this.Field("name", e => e.Name);
-            this.Field("assets", e => e.Assets);
-            this.Field("url", e => e.Url);
-            this.Field("views", e => e.Views);
+            Field("name", e => e.Name);
+            Field("assets", e => e.Assets);
+            Field("url", e => e.Url);
+            Field("views", e => e.Views);
         }
 
         public static bool HasField(string fieldName)

@@ -20,7 +20,7 @@ namespace Skimia.Plugins.Glimpse
                 {
                     [1000] = services =>
                     {
-                        if (this.serviceProvider.GetService<IHostingEnvironment>().IsDevelopment())
+                        if (serviceProvider.GetService<IHostingEnvironment>().IsDevelopment())
                         {
                             services.AddGlimpse();
                         } 
@@ -37,7 +37,7 @@ namespace Skimia.Plugins.Glimpse
                 {
                     [1000] = app =>
                     {
-                        if (this.serviceProvider.GetService<IHostingEnvironment>().IsDevelopment())
+                        if (serviceProvider.GetService<IHostingEnvironment>().IsDevelopment())
                         {
                             app.UseGlimpse();
                         }

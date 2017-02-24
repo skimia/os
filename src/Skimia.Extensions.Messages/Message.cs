@@ -9,10 +9,6 @@ namespace Skimia.Extensions.Messages
         public event Action<IMessage> Dispatched;
         private bool _dispatched;
 
-        public Message()
-        {
-        }
-
         public bool Canceled
         {
             get;

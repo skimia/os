@@ -127,7 +127,7 @@ namespace Skimia.Plugins.StaticFront
             }
 
             //if directory
-            if (this.serviceProvider.GetService<IHostingEnvironment>().IsDevelopment())
+            if (serviceProvider.GetService<IHostingEnvironment>().IsDevelopment())
             {
                 app.UseDirectoryBrowser(new DirectoryBrowserOptions()
                 {

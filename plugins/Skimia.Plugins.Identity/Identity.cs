@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using ExtCore.Data.EntityFramework.Sqlite;
 using ExtCore.Infrastructure;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Skimia.Plugins.Identity.Data.Models;
