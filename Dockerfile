@@ -1,6 +1,6 @@
-FROM microsoft/aspnetcore
+FROM microsoft/aspnetcore:1.1
 WORKDIR /app
-COPY RELEASE .
-EXPOSE 80
+COPY tmp_publish .
+EXPOSE 800
 
 ENTRYPOINT ["dotnet", "SkimiaOS.ApiHost.dll"]

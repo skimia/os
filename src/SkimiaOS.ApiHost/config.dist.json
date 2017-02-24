@@ -1,6 +1,6 @@
 ﻿{
   "Host": {
-    "Urls": [ "http://::80", "http://0.0.0.0:80" ]
+    "Urls": "http://0.0.0.0::800"
   },
   "Logging": {
     "IncludeScopes": false,
