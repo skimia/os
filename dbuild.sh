@@ -20,7 +20,7 @@ docker cp build-cont:/out ./$publishdir
 
 
 
-docker build -t skimia/os .
+docker build -t skimia/os -f Dockerfile.lite .
 
 #clean
 docker rm build-cont
