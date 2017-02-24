@@ -24,10 +24,10 @@ namespace Skimia.Extensions.GraphQl.Controllers
         {
             try
             {
-                return this.Json(
+                return Json(
                     new
                     {
-                        data = this._schema.Execute(input.query, GetVariables(input))
+                        data = _schema.Execute(input.query, GetVariables(input))
                     }
                 );
             }

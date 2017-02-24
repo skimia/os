@@ -1,0 +1,23 @@
+FROM microsoft/aspnetcore-build:1.1-projectjson
+
+
+ENV KOREBUILD_SKIP_RUNTIME_INSTALL true
+
+#2 Update and install basic packages needed
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends mono-devel unzip zip psmisc uuid-runtime
+
+#6 Clean
+
+RUN rm -rf /var/lib/apt/lists/*    
+
+WORKDIR /app
+
+
+COPY . .
+#run korebuild install
+RUN chmod +x build.sh 
+RUN ./build.sh repo-initialize
+
+RUN cd src/SkimiaOS.ApiHost && dotnet publish --output /out/ --configuration Release

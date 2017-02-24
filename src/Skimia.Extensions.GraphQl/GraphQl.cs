@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using ExtCore.Infrastructure;
 using Skimia.Extensions.GraphQl.Schema;
-using Skimia.Extensions.GraphQl.Type;
 
 namespace Skimia.Extensions.GraphQl
 {

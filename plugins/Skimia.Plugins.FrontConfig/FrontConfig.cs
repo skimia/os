@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using ExtCore.Infrastructure;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Skimia.Plugins.FrontConfig.Configuration;

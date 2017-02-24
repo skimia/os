@@ -11,9 +11,9 @@ namespace Skimia.Plugins.FrontConfig.Schema.Result
     {
         public FrontView() : base("FrontView", "represents a view implemented by a plugin")
         {
-            this.Field("name", e => e.InjectInView);
-            this.Field("controller", e => e.Controller);
-            this.Field("templateUrl", e => e.TemplateUrl);
+            Field("name", e => e.InjectInView);
+            Field("controller", e => e.Controller);
+            Field("templateUrl", e => e.TemplateUrl);
         }
 
         public static bool HasField(string fieldName)

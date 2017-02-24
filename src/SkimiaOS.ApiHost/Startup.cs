@@ -76,7 +76,7 @@ namespace SkimiaOS.ApiHost
         {
             serviceProvider = services.BuildServiceProvider();
             foreach (IExtension extension in ExtensionManager.Extensions)
-                extension.SetServiceProvider(this.serviceProvider);
+                extension.SetServiceProvider(serviceProvider);
         }
 
         private void LoadExtensionInDiscover()
