@@ -12,7 +12,7 @@
 
   "frameworks": {
     "netstandard1.6": {
-      "imports": "dnxcore50"
+      "imports": ["dnxcore50","portable-net45+win8"]
     }
   }
 }
