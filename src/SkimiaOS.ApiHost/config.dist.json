@@ -18,7 +18,7 @@
   "Data": {
     "DefaultConnection": {
       // Please keep in mind that you have to change '\' to '/' on Linux-based systems
-      "ConnectionString": "Data Source=..\\..\\..\\db.sqlite"
+      "ConnectionString": "Data Source=../../../db.sqlite"
     }
   },
   "Plugins": {
@@ -28,7 +28,7 @@
       "Applications": [
         {
           "Name": "os.web",
-          "Path": "apps\\os.web",
+          "Path": "apps/os.web",
           "BindTo": "/",
           "Rewrite": {
             "Apache": "rewrite.apache"
@@ -47,7 +47,7 @@
       }
     },
     "FrontConfig":{
-      "Path": "apps\\os.web\\app\\plugins"
+      "Path": "apps/os.web/app/plugins"
     }
   }
 }
