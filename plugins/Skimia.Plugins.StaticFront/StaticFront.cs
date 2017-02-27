@@ -76,7 +76,6 @@ namespace Skimia.Plugins.StaticFront
                         if (webApp.Path != null && (new DirectoryInfo(webApp.Path).Exists))
                         {
                             var fileProvider = new PhysicalFileProvider(webApp.Path);
-                            this.logger.LogInformation("Add Front Application {0}", webApp.Name);
                             apps.Add(webApp, fileProvider);
                         }
                         else
@@ -117,6 +116,8 @@ namespace Skimia.Plugins.StaticFront
                 FileProvider = fileProvider,
                 RequestPath = baseUrl
             });
+
+            this.logger.LogInformation("Bind Front Application {0} to : {1}", webApp.Name, webApp.BindTo);
         }
 
         private void AddApplicationRewrite(IApplicationBuilder app, ApplicationOptions webApp, IFileProvider fileProvider)
@@ -129,6 +130,8 @@ namespace Skimia.Plugins.StaticFront
                     .AddApacheModRewrite(fileProvider, webApp.Rewrite.Apache);
                 options.StaticFileProvider = fileProvider;
                 app.UseRewriter(options);
+
+                this.logger.LogInformation("Use apache rewrite file ({0}) for Front Application {1}", webApp.Rewrite.Apache, webApp.Name);
             }
             else
             {
@@ -137,6 +140,8 @@ namespace Skimia.Plugins.StaticFront
                     FileProvider = fileProvider,
                     RequestPath = baseUrl
                 });
+
+                this.logger.LogInformation("Use default index files for Front Application {1}", webApp.Name);
             }
 
             //if directory
@@ -147,6 +152,8 @@ namespace Skimia.Plugins.StaticFront
                     FileProvider = fileProvider,
                     RequestPath = baseUrl
                 });
+                
+                this.logger.LogInformation("Add directories index for Front Application {1}", webApp.Name);
             }
         }
     }

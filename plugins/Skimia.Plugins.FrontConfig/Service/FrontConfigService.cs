@@ -47,6 +47,8 @@ namespace Skimia.Plugins.FrontConfig.Service
                     {
                         if (appDirectory.GetFiles("config.json").Length > 0)
                         {
+                            _logger.LogInformation("Load Configuration for plugin {1}", appDirectory.Name);
+
                             var builder = new ConfigurationBuilder()
                                 .SetBasePath(appDirectory.FullName)
                                 .AddJsonFile("config.json");
@@ -55,13 +57,21 @@ namespace Skimia.Plugins.FrontConfig.Service
 
                             configurations.Add(pluginConfig.Get<Configuration.Front.Configuration>());
                         }
+                        else
+                        {
+                            _logger.LogWarning("Load Configuration error for plugin {1} config.json not exists", appDirectory.Name);
+                        }
 
                     }
                     catch (Exception ex)
-                    { 
+                    {
                         _logger.LogError(400, ex, "Loding Plugins Configurations Errors " + appDirectory.Name);
                     }
                 }
+            }
+            else
+            {
+                _logger.LogWarning("Directory {0} does not exists", baseDir.Name);
             }
 
             return configurations;

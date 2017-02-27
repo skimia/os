@@ -50,8 +50,7 @@
       "db.sqlite",
       "Plugins",
       "**/*.cshtml",
-      "config.json",
-      "config.dist.json",
+      "config/**",
       "web.config"
     ]
   },

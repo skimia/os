@@ -1,0 +1,6 @@
+﻿{
+  "Host": {
+    //semicolon separated address to bind, please keep in mind to not use same port in two addresses
+    "Urls": "http://0.0.0.0::80"
+  }
+}
