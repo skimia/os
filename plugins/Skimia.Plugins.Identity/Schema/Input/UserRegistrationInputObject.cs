@@ -9,9 +9,9 @@ namespace Skimia.Plugins.Identity.Schema.Input
     {
         public UserRegistrationInputObject() : base("InputUserRegister", "Input object for create an user")
         {
-            this.Field("username", e => e.Username);
-            this.Field("email", e => e.Email);
-            this.Field("password", e => e.Password);
+            Field("username", e => e.Username);
+            Field("email", e => e.Email);
+            Field("password", e => e.Password);
         }
     }
 }

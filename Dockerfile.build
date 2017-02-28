@@ -1,0 +1,11 @@
+FROM microsoft/aspnetcore-build:1.1-projectjson 
+
+WORKDIR /sources
+
+COPY tmp_restore ./
+
+RUN dotnet restore
+
+COPY . ./
+
+RUN cd src/SkimiaOS.ApiHost && dotnet publish --output /out/ --configuration Release

@@ -1,7 +1,8 @@
 {
   "buildOptions": {
     "emitEntryPoint": true,
-    "preserveCompilationContext": true
+    "preserveCompilationContext": true,
+    "debugType": "portable"
   },
   "dependencies": {
     "Microsoft.NETCore.App": {
@@ -30,10 +31,12 @@
     "Skimia.Extensions.GraphQl": "0.0.1-dev",
     "Microsoft.AspNetCore.Cors": "1.1.0",
     "Skimia.Plugins.Identity": "0.1.0-*",
-    "Skimia.Plugins.StaticFront": "0.1.0-*"
+    "Skimia.Plugins.StaticFront": "0.1.0-*",
+    "Skimia.Plugins.Glimpse": "0.1.0-dev",
+    "Skimia.Plugins.FrontConfig": "0.1.0-dev"
   },
   "frameworks": {
-    "netcoreapp1.0": {
+    "netcoreapp1.1": {
       "imports": [
         "dotnet5.6",
         "portable-net45+win8"
@@ -47,7 +50,7 @@
       "db.sqlite",
       "Plugins",
       "**/*.cshtml",
-      "config.json",
+      "config/**",
       "web.config"
     ]
   },

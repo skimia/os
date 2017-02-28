@@ -9,20 +9,13 @@ namespace Skimia.Extensions.Messages
         public event Action<IMessage> Dispatched;
         private bool _dispatched;
 
-        public Message()
-        {
-        }
-
         public bool Canceled
         {
             get;
             set;
         }
 
-        public bool IsDispatched
-        {
-            get { return _dispatched; }
-        }
+        public bool IsDispatched => _dispatched;
 
         public MessagePriority Priority
         {

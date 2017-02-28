@@ -7,7 +7,7 @@ namespace Skimia.Extensions.GraphQl.Controllers
         [Route("api/graph.ql.html")]
         public ActionResult Index()
         {
-            return this.View();
+            return View();
         }
     }
 }

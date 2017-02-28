@@ -256,3 +256,6 @@ GeneratedReport/
 .history/
 *xunit-results.xml
 src/SkimiaOS.ApiHost/config.json
+src/SkimiaOS.ApiHost/db.sqlite
+
+src/SkimiaOS.ApiHost/config/*.json

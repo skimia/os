@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SkimiaOS.ApiHost
 {
@@ -10,7 +9,9 @@ namespace SkimiaOS.ApiHost
     {
         private static readonly Dictionary<string,string> DistFiles = new Dictionary<string, string>()
         {
-            {"config.json", "config.dist.json" },
+            {"config/host.json",      "config/dist/host.json" },
+            {"config/framework.json", "config/dist/framework.json" },
+            {"config/plugins.json",   "config/dist/plugins.json" },
         };
         public static void Main(string[] args)
         {
@@ -18,12 +19,12 @@ namespace SkimiaOS.ApiHost
 
             var hostOptions = GetHostOptions();
 
-            IEnumerable<string> urls = hostOptions.Urls ?? new string[] { "http://localhost:5000" };
+            string urls = hostOptions.Urls ?? "http://localhost:5000";
             var host = new WebHostBuilder()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseKestrel()
                 .UseIISIntegration()
-                .UseUrls(urls.ToArray())
+                .UseUrls(urls)
                 .UseStartup<Startup>()
                 .Build();
 
@@ -45,7 +46,7 @@ namespace SkimiaOS.ApiHost
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("config.json", optional: true, reloadOnChange: false)
+                .AddJsonFile("config/host.json", optional: true, reloadOnChange: false)
                 .AddEnvironmentVariables();
                 
             var configuration = builder.Build();

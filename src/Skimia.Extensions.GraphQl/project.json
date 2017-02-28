@@ -1,6 +1,6 @@
 {
   "version": "0.0.1-dev",
-  "buildOptions": { "embed": [ "Views/**" ] },
+  "buildOptions": { "embed": [ "Views/**" ], "debugType": "portable" },
   "dependencies": {
     "ExtCore.Mvc.Infrastructure": "1.1.0",
     "GraphQLCore": "1.0.0-alpha-0126",
@@ -12,7 +12,7 @@
 
   "frameworks": {
     "netstandard1.6": {
-      "imports": "dnxcore50"
+      "imports": ["dnxcore50","portable-net45+win8"]
     }
   }
 }

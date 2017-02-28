@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Logging;
 using Skimia.Plugins.StaticFront.Configuration;
 using RewriteOptions = Microsoft.AspNetCore.Rewrite.RewriteOptions;
 
@@ -32,11 +33,11 @@ namespace Skimia.Plugins.StaticFront
                     return new Dictionary<int, Action<IApplicationBuilder>>();
                 }
 
-                var apps = new Dictionary<ApplicationOptions,IFileProvider>();
+                var apps = new Dictionary<ApplicationOptions, IFileProvider>();
 
                 if (staticFilesConfig.AutomaticResolution)
                 {
-
+                    this.logger.LogInformation("Automatic Front Applications Resolution");
                     var baseDir = new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), staticFilesConfig.Path));
 
                     if (baseDir.Exists)
@@ -55,24 +56,35 @@ namespace Skimia.Plugins.StaticFront
 
                             var fileProvider = new PhysicalFileProvider(appDirectory.FullName);
 
+
+                            this.logger.LogInformation("Add Front Application {0}", appDirectory.Name);
+
                             apps.Add(appOptions, fileProvider);
                         }
                     }
-                    
+                    else
+                    {
+                        this.logger.LogWarning("Directory {0} does not exists", baseDir.Name);
+                    }
+
                 }
-                else if(staticFilesConfig.Applications != null && staticFilesConfig.Applications.Any())
+                else if (staticFilesConfig.Applications != null && staticFilesConfig.Applications.Any())
                 {
                     foreach (var webApp in staticFilesConfig.Applications)
                     {
                         webApp.Path = Path.Combine(Directory.GetCurrentDirectory(), webApp.Path);
-                        if (webApp.Path != null && ( new DirectoryInfo(webApp.Path).Exists ))
+                        if (webApp.Path != null && (new DirectoryInfo(webApp.Path).Exists))
                         {
                             var fileProvider = new PhysicalFileProvider(webApp.Path);
                             apps.Add(webApp, fileProvider);
                         }
-                        
+                        else
+                        {
+                            this.logger.LogWarning("Invalid path {0} for app {1}  does not exists", webApp.Path, webApp.Name);
+                        }
+
                     }
-                    
+
                 }
 
                 return new Dictionary<int, Action<IApplicationBuilder>>()
@@ -104,18 +116,22 @@ namespace Skimia.Plugins.StaticFront
                 FileProvider = fileProvider,
                 RequestPath = baseUrl
             });
+
+            this.logger.LogInformation("Bind Front Application {0} to : {1}", webApp.Name, webApp.BindTo);
         }
 
         private void AddApplicationRewrite(IApplicationBuilder app, ApplicationOptions webApp, IFileProvider fileProvider)
         {
             var baseUrl = webApp.BindTo.Equals(new PathString("/")) ? null : webApp.BindTo;
             //if has apache config
-            if ( !string.IsNullOrEmpty(webApp.Rewrite?.Apache) && fileProvider.GetFileInfo(webApp.Rewrite.Apache).Exists)
+            if (!string.IsNullOrEmpty(webApp.Rewrite?.Apache) && fileProvider.GetFileInfo(webApp.Rewrite.Apache).Exists)
             {
                 var options = new RewriteOptions()
                     .AddApacheModRewrite(fileProvider, webApp.Rewrite.Apache);
                 options.StaticFileProvider = fileProvider;
                 app.UseRewriter(options);
+
+                this.logger.LogInformation("Use apache rewrite file ({0}) for Front Application {1}", webApp.Rewrite.Apache, webApp.Name);
             }
             else
             {
@@ -124,16 +140,20 @@ namespace Skimia.Plugins.StaticFront
                     FileProvider = fileProvider,
                     RequestPath = baseUrl
                 });
+
+                this.logger.LogInformation("Use default index files for Front Application {1}", webApp.Name);
             }
 
             //if directory
-            if (this.serviceProvider.GetService<IHostingEnvironment>().IsDevelopment())
+            if (serviceProvider.GetService<IHostingEnvironment>().IsDevelopment())
             {
                 app.UseDirectoryBrowser(new DirectoryBrowserOptions()
                 {
                     FileProvider = fileProvider,
                     RequestPath = baseUrl
                 });
+                
+                this.logger.LogInformation("Add directories index for Front Application {1}", webApp.Name);
             }
         }
     }

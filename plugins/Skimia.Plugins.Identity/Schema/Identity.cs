@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using GraphQLCore.Type;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using Skimia.Extensions.GraphQl.Attributes;
 using Skimia.Extensions.GraphQl.Schema;
 using Microsoft.Extensions.Logging;
@@ -15,27 +17,17 @@ namespace Skimia.Plugins.Identity.Schema
     [GraphQlType]
     public class Identity : GraphQLObjectType
     {
-
-        private readonly SignInManager<User> _signInManager;
-        private readonly UserManager<User> _userManager;
-
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ILogger _logger;
-
+        private readonly IServiceProvider _serviceProvider;
 
         public Identity(
-            IHttpContextAccessor httpContextAccessor,
             Mutation mutation,
             Query query,
-            UserManager<User> userManager,
-            SignInManager<User> signInManager, 
+            IServiceProvider serviceProvider,
             ILoggerFactory loggerFactory) : base("Identity", "Identity Plugin GraphQl Namespace")
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-
+            _serviceProvider = serviceProvider;
             _logger = loggerFactory.CreateLogger<Identity>();
-            _httpContextAccessor = httpContextAccessor;
 
             this.Field("register", (UserRegistration user) => Register(user).GetAwaiter().GetResult());
 
@@ -55,16 +47,24 @@ namespace Skimia.Plugins.Identity.Schema
 
         private async Task<IdentityResult> Register(UserRegistration user)
         {
-            var dbUser = new User { UserName = user.Username, Email = user.Email };
-            var result = await _userManager.CreateAsync(dbUser, user.Password);
+            var dbUser = new User {UserName = user.Username, Email = user.Email};
 
+            //Take care if your schemas is singleton and yours services if scoped it can be disposed on the execution replay,
+            //get the last fresh instance with service provider
+            var userManager = _serviceProvider.GetRequiredService<UserManager<User>>();
+
+            var result = await userManager.CreateAsync(dbUser, user.Password);
             if (result.Succeeded)
             {
                 _logger.LogInformation(1, "User register.");
+
                 return result;
             }
+
             _logger.LogWarning(2, "Invalid register attempt.");
+
             return result;
+
         }
 
         /// <summary>
@@ -75,7 +75,10 @@ namespace Skimia.Plugins.Identity.Schema
         /// <returns></returns>
         private async Task<string> Authenticate(string username, string password)
         {
-            var result = await _signInManager.PasswordSignInAsync(username,password,false,true);
+            var signInManager = _serviceProvider.GetRequiredService<SignInManager<User>>();
+
+            var result = await signInManager.PasswordSignInAsync(username,password,false,true);
+
             if (result.Succeeded)
             {
                 _logger.LogInformation(1, "User logged in.");
@@ -83,13 +86,16 @@ namespace Skimia.Plugins.Identity.Schema
                 return (await GetUserAsync()).UserName;
                 //return GetUserAsync().GetAwaiter().GetResult();
             }
+
             _logger.LogWarning(2, "Invalid login attempt.");
             return "error";
         }
 
         private async Task<User> GetUserAsync()
         {
-            return await _userManager.GetUserAsync(this._httpContextAccessor.HttpContext.User);
+            var userManager = _serviceProvider.GetRequiredService<UserManager<User>>();
+
+            return await userManager.GetUserAsync(_serviceProvider.GetRequiredService<IHttpContextAccessor>().HttpContext.User);
         }
     }
 }

@@ -1,0 +1,31 @@
+﻿{
+  "Plugins": {
+    "StaticFiles": {
+      "Path": "apps",
+      "AutomaticResolution": false,
+      "Applications": [
+        {
+          "Name": "os.web",
+          "Path": "apps/os.web",
+          "BindTo": "/",
+          "Rewrite": {
+            "Apache": "rewrite.apache"
+          }
+        }
+      ]
+    },
+    //Dont keep this config in production is not secure
+    "Identity":{
+      "Password":{
+        "RequireDigit": false,
+        "RequireNonAlphanumeric": false,
+        "RequireUppercase":false,
+        "RequireLowercase":false,
+        "RequiredLength": 6
+      }
+    },
+    "FrontConfig":{
+      "Path": "apps/os.web/app/plugins"
+    }
+  }
+}

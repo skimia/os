@@ -20,8 +20,9 @@ namespace SkimiaOS.ApiHost
             
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("config.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"config.{env.EnvironmentName}.json", optional: true)
+                .AddJsonFile("config/framework.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("config/plugins.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"config/framework.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
 
             configurationRoot = builder.Build();
@@ -76,7 +77,7 @@ namespace SkimiaOS.ApiHost
         {
             serviceProvider = services.BuildServiceProvider();
             foreach (IExtension extension in ExtensionManager.Extensions)
-                extension.SetServiceProvider(this.serviceProvider);
+                extension.SetServiceProvider(serviceProvider);
         }
 
         private void LoadExtensionInDiscover()

@@ -15,10 +15,10 @@ namespace Skimia.Extensions.GraphQl.Schema
         public RootSchema(IAttributeDiscover discover, Query rootQuery, Mutation rootMutation, IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            this.AddKnownType(rootQuery);
-            this.AddKnownType(rootMutation);
-            this.Query(rootQuery);
-            this.Mutation(rootMutation);
+            AddKnownType(rootQuery);
+            AddKnownType(rootMutation);
+            Query(rootQuery);
+            Mutation(rootMutation);
 
             //should use better implementation
             discover.RegisterInstanceContainer(this);

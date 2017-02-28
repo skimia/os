@@ -1,9 +1,7 @@
-using System.Collections.Generic;
-
 namespace SkimiaOS.ApiHost.Configuration
 {
     public class HostOptions
     {
-        public IEnumerable<string> Urls { get; set; }
+        public string Urls { get; set; }
     }
 }

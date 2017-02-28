@@ -9,8 +9,8 @@ namespace Skimia.Plugins.Identity.Schema.Result
     {
         public IdentityResultObject() : base("IdentityResult", "result of an identity operation")
         {
-            this.Field("succeeded", e => e.Succeeded);
-            this.Field("errors", e => e.Errors);
+            Field("succeeded", e => e.Succeeded);
+            Field("errors", e => e.Errors);
         }
     }
 }
