@@ -1,0 +1,4 @@
+skimia-os:
+  image: 'skimia/os:latest'
+  ports:
+    - '80'
