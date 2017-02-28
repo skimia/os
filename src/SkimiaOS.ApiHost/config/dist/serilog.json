@@ -1,0 +1,19 @@
+﻿{
+  "Serilog":{
+    "Using":  ["Serilog.Sinks.RollingFile"],
+    "WriteTo": [
+      { "Name": "RollingFile", "Args": { 
+        "pathFormat": "logs/log-{Date}.txt",
+        "outputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] [{SourceContext}] {Message}{NewLine}{Exception}"
+      } }
+    ],
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Warning",
+        "System": "Warning",
+        "ExtCore.WebApplication.AssemblyProvider": "Warning"
+      }
+    }
+  }
+}
