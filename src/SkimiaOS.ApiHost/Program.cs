@@ -11,6 +11,7 @@ namespace SkimiaOS.ApiHost
         {
             {"config/host.json",      "config/dist/host.json" },
             {"config/framework.json", "config/dist/framework.json" },
+            {"config/serilog.json",   "config/dist/serilog.json" },
             {"config/plugins.json",   "config/dist/plugins.json" },
         };
         public static void Main(string[] args)
