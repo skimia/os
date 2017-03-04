@@ -1,4 +1,5 @@
 ﻿{
+  //see https://github.com/serilog/serilog-settings-configuration
   "Serilog":{
     "Using":  ["Serilog.Sinks.RollingFile"],
     "WriteTo": [

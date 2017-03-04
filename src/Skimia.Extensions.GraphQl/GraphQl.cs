@@ -24,6 +24,7 @@ namespace Skimia.Extensions.GraphQl
                         collection.AddSingleton<RootSchema>();
                         collection.AddSingleton<Query>();
                         collection.AddSingleton<Mutation>();
+                        serviceProvider.GetService<RootSchema>();
                     }
                 };
             }

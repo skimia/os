@@ -108,9 +108,9 @@ add "&raw" to the end of the URL within a browser.
         onEditQuery: onEditQuery,
         onEditVariables: onEditVariables,
         onEditOperationName: onEditOperationName,
-        query: "query{\n  sum(numbers:[1,2,3]) \n}",
-        response: "{\n  \"errors\": [\n    {\n      \"message\": \"Must provide an operation.\"\n    }\n  ]\n}",
-        variables: null,
+        query: "mutation ($user: InputUserRegister) {\n  identity {\n    register(user: $user) {\n      succeeded\n      errors {\n        code\n        description\n      }\n    }\n  }\n}",
+        response: "{\n  \"info\": [\n    {\n      \"message\": \"TRY Play to create your first user.\"\n    }\n  ]\n}",
+        variables: "{\n  \"user\":{\n    \"username\":\"demo-os\",\n    \"password\":\"skimia\",\n    \"email\":\"email@skimia.agency\"\n  }\n}",
         operationName: "undefined",
       }),
       document.body
