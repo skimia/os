@@ -11,12 +11,14 @@ Skimia servier operating system for create distribued web apps
 ### Using Docker
 
 #### compile
+
 ```
 git clone git@github.com:skimia/os.git
 cd os
 docker build -t skimia/os .
 docker run -ti -p 80 skimia/os
 ```
+
 #### Docker Hub
 
 [![Dockerfile](https://img.shields.io/badge/Hub-Dockerfile-blue.svg?style=flat-square)](https://hub.docker.com/r/skimia/os/)
@@ -24,6 +26,11 @@ docker run -ti -p 80 skimia/os
 ```
 docker run -ti -p 80 skimia/os
 ```
+
+#### Deploy to Cloud
+
+[![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/skimia/os)
+
 
 ## Build Status
 
